@@ -65,11 +65,15 @@ body{
 @keyframes surge{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 
 /* Tela de boas-vindas */
-#welcome{text-align:center;padding-top:34px}
-#welcome .hero-icone{width:64px;height:64px;margin:0 auto 22px;border-radius:50%;display:grid;place-items:center;background:var(--cor-destaque);color:#fff;font-size:28px}
-#welcome h1{font-weight:700;font-size:30px;line-height:1.15;margin-bottom:14px;color:var(--cor-destaque)}
-#welcome p{color:var(--cor-suave);font-size:16px;margin-bottom:8px}
-#welcome .meta{font-size:13px;color:var(--cor-suave);margin-top:18px}
+#welcome{text-align:center;padding-top:30px}
+#welcome .eyebrow{display:block;font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#3f9a52;margin-bottom:18px}
+#welcome .hero-mark{width:96px;height:96px;margin:0 auto 24px;border-radius:50%;display:grid;place-items:center;background:rgba(2,48,71,.05);box-shadow:inset 0 0 0 1px rgba(2,48,71,.07)}
+#welcome .hero-mark svg{width:50px;height:50px}
+#welcome h1{font-weight:700;font-size:31px;line-height:1.12;letter-spacing:-.01em;margin-bottom:14px;color:var(--cor-destaque)}
+#welcome p{color:var(--cor-suave);font-size:15.5px;line-height:1.55;max-width:340px;margin:0 auto}
+#welcome .garantias{list-style:none;display:flex;flex-direction:column;gap:11px;width:fit-content;margin:24px auto 26px;padding:0}
+#welcome .garantias li{display:flex;align-items:center;gap:10px;font-size:14.5px;color:var(--cor-texto);font-weight:500}
+#welcome .garantias svg{width:19px;height:19px;color:var(--cor-destaque);flex-shrink:0}
 
 /* Títulos de etapa */
 .etapa-titulo{font-weight:700;font-size:23px;margin-bottom:4px;color:var(--cor-destaque)}
@@ -112,6 +116,11 @@ select{
 .opcao input{width:20px;height:20px;accent-color:var(--cor-destaque);flex-shrink:0}
 .opcao:has(input:checked){border-color:var(--cor-destaque);background:rgba(2,48,71,.05)}
 
+/* Aceite LGPD: texto longo, alinhado ao topo */
+.opcao.consent{align-items:flex-start;font-size:14px;line-height:1.45}
+.opcao.consent input{margin-top:1px}
+.opcao.consent a{color:var(--cor-destaque);font-weight:600}
+
 /* Linha divisória entre referências/blocos */
 .divisor{border:none;border-top:1px solid var(--cor-borda);margin:24px 0}
 
@@ -144,10 +153,15 @@ select{
 .btn-secundario{background:transparent;color:var(--cor-texto);border:1.5px solid var(--cor-borda);padding-left:24px;padding-right:24px}
 .btn-grande{width:100%}
 
-#thanks{text-align:center;padding-top:40px}
-#thanks .hero-icone{width:72px;height:72px;margin:0 auto 24px;border-radius:50%;display:grid;place-items:center;background:var(--cor-verde);color:#fff;font-size:34px}
-#thanks h1{font-weight:700;font-size:28px;margin-bottom:12px;color:var(--cor-destaque)}
-#thanks p{color:var(--cor-suave);font-size:16px}
+#thanks{text-align:center;padding-top:36px}
+#thanks .hero-mark-ok{width:84px;height:84px;margin:0 auto 22px;border-radius:50%;display:grid;place-items:center;background:var(--cor-verde)}
+#thanks .hero-mark-ok svg{width:40px;height:40px;color:#fff}
+#thanks h1{font-weight:700;font-size:28px;margin-bottom:10px;color:var(--cor-destaque)}
+#thanks .thanks-lead{color:var(--cor-suave);font-size:16px;line-height:1.5;max-width:340px;margin:0 auto 22px}
+#thanks .declaracao{background:var(--cor-superficie);border:1px solid var(--cor-borda);border-radius:var(--raio);padding:18px;text-align:left;max-width:390px;margin:0 auto;font-size:13.5px;color:var(--cor-suave);line-height:1.6}
+#thanks .declaracao p{margin-bottom:10px}
+#thanks .declaracao p:last-child{margin-bottom:0}
+#thanks .declaracao strong{color:var(--cor-texto);font-weight:600}
 
 .rodape{text-align:center;padding:18px 24px 26px;font-size:11.5px;color:var(--cor-suave);line-height:1.7;border-top:1px solid var(--cor-borda)}
 
@@ -170,12 +184,30 @@ select{
     <!-- ====== PONTO DE CONFIGURAÇÃO 2: TEXTO DE BOAS-VINDAS ========= -->
     <!-- ============================================================= -->
     <section class="screen active" id="welcome">
-      <div class="hero-icone">📝</div>
-      <h1>Proposta de<br>Locação</h1>
-      <p>Informações necessárias para formalizarmos seu contrato de locação,
-         garantindo segurança, agilidade e transparência.</p>
-      <button class="btn btn-principal btn-grande" style="margin-top:28px" onclick="iniciar()">Começar</button>
-      <p class="meta">Seus dados são usados apenas para análise da proposta.</p>
+      <span class="eyebrow">Análise de ficha · Locação</span>
+      <div class="hero-mark">
+        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 5h15.5L36 13.5V39a3 3 0 0 1-3 3H12a3 3 0 0 1-3-3V8a3 3 0 0 1 3-3z" fill="#ffffff" stroke="#023047" stroke-width="2.2" stroke-linejoin="round"/>
+          <path d="M27 5v9h9" fill="none" stroke="#023047" stroke-width="2.2" stroke-linejoin="round"/>
+          <line x1="16" y1="21" x2="29" y2="21" stroke="#023047" stroke-width="2.2" stroke-linecap="round"/>
+          <line x1="16" y1="27" x2="26" y2="27" stroke="#023047" stroke-width="2.2" stroke-linecap="round"/>
+          <circle cx="33.5" cy="33.5" r="8.5" fill="#70d262" stroke="#ffffff" stroke-width="2.5"/>
+          <path d="M30 33.5l2.3 2.3 4.3-4.7" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h1>Vamos montar<br>sua proposta</h1>
+      <p>Reúna seus dados para a análise de ficha. Leva poucos minutos, suas informações ficam protegidas, e o envio não obriga ao fechamento do contrato.</p>
+      <ul class="garantias">
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 1.8"/></svg>
+          Cerca de 5 minutos
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+          Dados protegidos (LGPD)
+        </li>
+      </ul>
+      <button class="btn btn-principal btn-grande" style="margin-top:8px" onclick="iniciar()">Iniciar proposta</button>
     </section>
 
     <form id="form" novalidate>
@@ -292,38 +324,39 @@ select{
         </div>
       </section>
 
-      <!-- ETAPA: CÔNJUGE DO LOCATÁRIO (opcional) -->
+      <!-- ETAPA: CÔNJUGE — só aparece se o responsável for casado(a) / união estável -->
       <section class="step" id="stepConjugeLocatario">
         <h2 class="etapa-titulo">Cônjuge / Companheiro(a)</h2>
-        <p class="etapa-sub">Referente ao responsável pelo aluguel. Preencha somente se houver.</p>
+        <p class="etapa-sub">Como o responsável pelo aluguel é casado(a) ou tem união estável, precisamos dos dados do(a) cônjuge/companheiro(a).</p>
 
         <div class="campo">
-          <label>Nome completo do cônjuge / companheiro(a)</label>
-          <input type="text" name="conj_loc_nome" placeholder="Nome e sobrenome">
+          <label>Nome completo do cônjuge / companheiro(a) <span class="req">*</span></label>
+          <input type="text" name="conj_loc_nome" placeholder="Nome e sobrenome" data-cond-req>
         </div>
 
         <div class="linha">
           <div class="campo">
-            <label>Número do CPF</label>
-            <input type="tel" name="conj_loc_cpf" class="cpf-mask" placeholder="000.000.000-00">
+            <label>Número do CPF <span class="req">*</span></label>
+            <input type="tel" name="conj_loc_cpf" class="cpf-mask" placeholder="000.000.000-00" data-cond-req>
           </div>
           <div class="campo">
-            <label>Número do RG</label>
-            <input type="text" name="conj_loc_rg">
+            <label>Número do RG <span class="req">*</span></label>
+            <input type="text" name="conj_loc_rg" data-cond-req>
           </div>
         </div>
 
         <div class="linha">
           <div class="campo">
-            <label>Data de Nascimento</label>
-            <input type="tel" name="conj_loc_nascimento" class="data-mask" placeholder="00/00/0000">
+            <label>Data de Nascimento <span class="req">*</span></label>
+            <input type="tel" name="conj_loc_nascimento" class="data-mask" placeholder="00/00/0000" data-cond-req>
           </div>
           <div class="campo">
-            <label>Número do WhatsApp</label>
-            <input type="tel" name="conj_loc_whatsapp" class="tel-mask" placeholder="(00) 00000-0000">
+            <label>Número do WhatsApp <span class="req">*</span></label>
+            <input type="tel" name="conj_loc_whatsapp" class="tel-mask" placeholder="(00) 00000-0000" data-cond-req>
           </div>
         </div>
 
+        <div class="erro-msg" data-erro>Preencha os campos obrigatórios para continuar.</div>
         <div class="nav">
           <button type="button" class="btn btn-secundario" onclick="voltar()">Voltar</button>
           <button type="button" class="btn btn-principal" onclick="avancar()">Avançar</button>
@@ -505,7 +538,7 @@ select{
         <p class="etapa-sub">Do responsável pelo aluguel (a pessoa analisada pelo seguro).</p>
 
         <div class="upload">
-          <label>Foto da frente e o verso do RG/CNH</label>
+          <label>Foto frente e verso da CNH ou RG (documento com foto)</label>
           <label class="dropzone" id="dz_rg">
             <span class="conteudo-dz">
               <span class="nuvem">⬆️</span>
@@ -517,14 +550,14 @@ select{
         </div>
 
         <div class="upload">
-          <label>Foto do CPF</label>
-          <label class="dropzone" id="dz_cpf">
+          <label>Comprovante de renda</label>
+          <label class="dropzone" id="dz_renda">
             <span class="conteudo-dz">
               <span class="nuvem">⬆️</span>
               <span class="acao">Pesquisar arquivos</span>
               <span class="sub">Toque para selecionar (foto ou PDF)</span>
             </span>
-            <input type="file" accept="image/*,application/pdf" data-doc="doc_cpf">
+            <input type="file" accept="image/*,application/pdf" data-doc="doc_renda">
           </label>
         </div>
 
@@ -549,7 +582,7 @@ select{
         </div>
       </section>
 
-      <!-- ETAPA: OBSERVAÇÃO + ENVIO -->
+      <!-- ETAPA: OBSERVAÇÃO + ACEITE LGPD + ENVIO -->
       <section class="step" id="stepObs">
         <h2 class="etapa-titulo">Observações</h2>
         <p class="etapa-sub">Deseja informar alguma observação ou comentário?</p>
@@ -557,6 +590,15 @@ select{
         <div class="campo">
           <label>Observação ou comentário</label>
           <textarea name="observacao"></textarea>
+        </div>
+
+        <!-- Aceite LGPD: obrigatório para enviar -->
+        <div class="campo">
+          <label class="opcao consent">
+            <input type="checkbox" name="aceite_lgpd" id="aceiteLgpd" value="Aceito">
+            <span>Declaro, sob as penas da lei, que os dados informados são verdadeiros e que tenho autorização das pessoas indicadas como referências e responsável; e concordo com o uso dos meus dados conforme o
+              <a href="termo.html" target="_blank" rel="noopener">Termo de Uso e Privacidade (LGPD)</a>.</span>
+          </label>
         </div>
 
         <div class="erro-msg" data-erro></div>
@@ -572,10 +614,14 @@ select{
     <!-- ====== PONTO DE CONFIGURAÇÃO 3: TEXTO DE AGRADECIMENTO ======= -->
     <!-- ============================================================= -->
     <section class="screen" id="thanks">
-      <div class="hero-icone">✓</div>
-      <h1>Proposta enviada!</h1>
-      <p>Recebemos suas informações.<br>
-         Em breve entraremos em contato pelo WhatsApp.</p>
+      <div class="hero-mark-ok">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+      </div>
+      <h1>Obrigado!</h1>
+      <p class="thanks-lead">Recebemos sua proposta. Em breve entraremos em contato pelo WhatsApp.</p>
+      <div class="declaracao">
+        <p>O mero preenchimento e entrega da proposta <strong>não obriga ao fechamento do contrato</strong>, que somente ocorrerá se houver aprovação da análise de ficha.</p>
+      </div>
     </section>
 
   </div>
@@ -593,8 +639,21 @@ select{
    ATENÇÃO: crie um cenário NOVO no Make para o Locatário e cole o
    webhook dele aqui. NÃO use o webhook do Locador — os campos são
    diferentes e vão bagunçar o cenário antigo.
+   (Você vai preencher isso na ETAPA 3 do nosso plano.)
    ===================================================================== */
 const WEBHOOK_URL = "";  // <- cole aqui o webhook do NOVO cenário do Locatário
+
+/* =====================================================================
+   ====== PONTO DE CONFIGURAÇÃO 5: SUPABASE (DOCUMENTOS) ===============
+   Os documentos vão DIRETO para o seu Supabase (bucket privado), e só
+   o NOME do arquivo viaja para o Make/planilha. Assim a planilha nunca
+   recebe a imagem inteira.
+   - SUPABASE_ANON: cole sua chave "anon / public"
+     (Supabase → Settings → API Keys). NÃO use a service_role.
+   ===================================================================== */
+const SUPABASE_URL    = "https://gcoikoeiuwaygjjwedjp.supabase.co";
+const SUPABASE_BUCKET = "documentos-locatarios";
+const SUPABASE_ANON   = "COLE_AQUI_SUA_CHAVE_ANON_PUBLIC";
 
 /* ---- daqui pra baixo é a "mágica"; normalmente você não mexe ---- */
 
@@ -603,7 +662,7 @@ const progressFill = document.getElementById('progressFill');
 const welcome      = document.getElementById('welcome');
 const thanks       = document.getElementById('thanks');
 
-// Guarda os documentos anexados (já em texto/base64)
+// Guarda os documentos anexados (já processados em memória)
 const arquivos = {};
 
 let indice = 0;
@@ -615,13 +674,29 @@ let indice = 0;
 // - Renda e cônjuge se referem sempre ao responsável (no "Sim", é o próprio morador).
 function sequencia(){
   const dif = document.querySelector('input[name=quem_assina]:checked');
+  const ehNao = dif && dif.value.indexOf('Não') === 0;
   const base = ['stepInicio','stepMorador'];
-  if(dif && dif.value.indexOf('Não') === 0){
+  if(ehNao){
     base.push('stepLocatario');             // identidade do responsável (outra pessoa)
   }
-  base.push('stepLocatarioProf','stepConjugeLocatario');  // renda + cônjuge do responsável
+  base.push('stepLocatarioProf');           // renda do responsável
+  // A tela do cônjuge só aparece se o responsável for casado(a) ou união estável.
+  if(precisaConjuge(ehNao)){
+    base.push('stepConjugeLocatario');
+  }
   base.push('stepPerfil','stepComplementares','stepReferencias','stepDocumentos','stepObs');
   return base;
+}
+
+// Decide se a etapa do cônjuge deve aparecer, olhando o estado civil CERTO:
+// - "Não" (outra pessoa assina): estado civil do responsável (loc_estado_civil)
+// - "Sim" (a própria pessoa assina): estado civil do morador (mor_estado_civil)
+function precisaConjuge(ehNao){
+  const campo = ehNao
+    ? document.querySelector('select[name=loc_estado_civil]')
+    : document.querySelector('select[name=mor_estado_civil]');
+  const valor = campo ? campo.value : '';
+  return valor === 'Casado(a)' || valor === 'União Estável';
 }
 
 function mostrarEtapa(i){
@@ -679,10 +754,6 @@ function validar(etapaEl){
   etapaEl.querySelectorAll('[data-radio-req]').forEach(g=>{
     if(!g.querySelector('input:checked')) ok = false;
   });
-  // grupos de radio obrigatórios só quando a etapa aparece
-  etapaEl.querySelectorAll('[data-radio-req-cond]').forEach(g=>{
-    if(!g.querySelector('input:checked')) ok = false;
-  });
 
   if(erroBox) erroBox.classList.toggle('show', !ok);
   return ok;
@@ -719,7 +790,7 @@ function aplicarMascaras(){
 }
 aplicarMascaras();
 
-/* ---------- Upload de documentos (com compressão de imagem) ---------- */
+/* ---------- Upload de documentos (processa em memória; sobe no envio) ---------- */
 document.querySelectorAll('input[type=file][data-doc]').forEach(input=>{
   input.addEventListener('change', async ()=>{
     const dz = input.closest('.dropzone');
@@ -780,9 +851,42 @@ function comprimirImagem(file){
 
 async function processarArquivo(file){
   if(file.type.startsWith('image/')) return await comprimirImagem(file);
-  // PDF ou outros: envia como está (atenção ao tamanho)
+  // PDF ou outros: envia como está
   const data = await lerBase64(file);
   return { name:file.name, type:file.type, data:data };
+}
+
+/* ---------- Converte o arquivo (dataURL) para Blob, p/ subir ao Supabase ---------- */
+function dataURLparaBlob(dataURL){
+  const partes = dataURL.split(',');
+  const mime = (partes[0].match(/:(.*?);/) || [,'application/octet-stream'])[1];
+  const bin = atob(partes[1]);
+  const arr = new Uint8Array(bin.length);
+  for(let i=0;i<bin.length;i++) arr[i] = bin.charCodeAt(i);
+  return new Blob([arr], {type: mime});
+}
+
+/* ---------- Sobe UM arquivo direto pro Supabase (bucket privado) ----------
+   Retorna o NOME do arquivo salvo (caminho dentro do bucket).
+   É esse nome que vai pro Make/planilha — a imagem em si nunca passa por lá. */
+async function enviarParaSupabase(processado, chave){
+  const blob = dataURLparaBlob(processado.data);
+  const ext  = (processado.name.split('.').pop() || 'jpg').toLowerCase().replace(/[^a-z0-9]/g,'');
+  const aleatorio = Math.random().toString(36).slice(2,8);
+  const caminho = `${Date.now()}_${chave}_${aleatorio}.${ext}`;
+
+  const resp = await fetch(`${SUPABASE_URL}/storage/v1/object/${SUPABASE_BUCKET}/${caminho}`, {
+    method:'POST',
+    headers:{
+      'Authorization': 'Bearer ' + SUPABASE_ANON,
+      'apikey': SUPABASE_ANON,
+      'Content-Type': processado.type || 'application/octet-stream',
+      'x-upsert': 'false'
+    },
+    body: blob
+  });
+  if(!resp.ok) throw new Error('Falha no upload (' + resp.status + ')');
+  return caminho;
 }
 
 /* ---------- Envio final ---------- */
@@ -790,6 +894,15 @@ async function enviar(){
   const seq = sequencia();
   const etapaEl = document.getElementById(seq[indice]);
   if(!validar(etapaEl)) return;
+
+  // Aceite LGPD obrigatório
+  const aceite  = document.getElementById('aceiteLgpd');
+  const erroObs = etapaEl.querySelector('[data-erro]');
+  if(!aceite.checked){
+    erroObs.textContent = 'É necessário aceitar o Termo de Uso e Privacidade para enviar.';
+    erroObs.classList.add('show');
+    return;
+  }
 
   const btn = document.getElementById('btnEnviar');
   btn.disabled = true;
@@ -812,11 +925,23 @@ async function enviar(){
     });
   }
 
-  // anexa os documentos processados
-  Object.keys(arquivos).forEach(k=>{
-    dados[k + '_nome'] = arquivos[k].name;
-    dados[k]           = arquivos[k].data; // texto base64
-  });
+  // Se a tela do cônjuge não se aplica (solteiro, viúvo, etc.), não envia dados de
+  // cônjuge — mesmo que tenham ficado preenchidos antes de a pessoa trocar o estado civil.
+  if(!precisaConjuge(!respEhMorador)){
+    ['nome','cpf','rg','nascimento','whatsapp'].forEach(c=>{ dados['conj_loc_'+c] = ''; });
+  }
+
+  // Sobe os documentos pro Supabase e guarda só o NOME de cada um.
+  for(const k of Object.keys(arquivos)){
+    try{
+      const caminho = await enviarParaSupabase(arquivos[k], k);
+      dados[k]          = caminho;            // ex.: doc_rg_cnh = "1712..._doc_rg_cnh_x9.jpg"
+      dados[k + '_nome'] = arquivos[k].name;  // nome original (só para referência)
+    }catch(e){
+      dados[k]          = 'ERRO_UPLOAD';
+      dados[k + '_nome'] = arquivos[k].name;
+    }
+  }
 
   const params = new URLSearchParams(window.location.search);
   dados.parceiro   = params.get('parceiro') || '';
