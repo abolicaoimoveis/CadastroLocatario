@@ -739,21 +739,27 @@ const arquivos = {};
 let indice = 0;
 
 // Monta a ordem das etapas.
-// - "Seus dados" (morador que preenche) aparece SEMPRE e vem primeiro.
-// - "Dados do responsável" (a outra pessoa) só aparece quando o aluguel
-//   NÃO fica no nome de quem preenche (resposta começa com "Não").
-// - Renda e cônjuge se referem sempre ao responsável (no "Sim", é o próprio morador).
+// - Quem ASSINA vem primeiro e em bloco: identidade, renda e cônjuge.
+//   Assim a tela seguinte ao "Foi o CPF de outra pessoa" é a dela, como o
+//   texto da opção promete. Antes "Seus dados" vinha no meio e confundia.
+// - "Seus dados" (quem vai morar) aparece SEMPRE: no "Sim" é a mesma pessoa
+//   e abre o bloco; no "Não" vem depois de fechado o bloco de quem assina.
 function sequencia(){
   const dif = document.querySelector('input[name=quem_assina]:checked');
   const ehNao = dif && dif.value.indexOf('Não') === 0;
-  const base = ['stepInicio','stepMorador'];
+  const base = ['stepInicio'];
   if(ehNao){
-    base.push('stepLocatario');             // identidade do responsável (outra pessoa)
+    base.push('stepLocatario');             // identidade de quem assina (outra pessoa)
+  }else{
+    base.push('stepMorador');               // assina e mora: um bloco só
   }
-  base.push('stepLocatarioProf');           // renda do responsável
+  base.push('stepLocatarioProf');           // renda de quem assina
   // A tela do cônjuge só aparece se o responsável for casado(a) ou união estável.
   if(precisaConjuge(ehNao)){
     base.push('stepConjugeLocatario');
+  }
+  if(ehNao){
+    base.push('stepMorador');               // só agora os dados de quem vai morar
   }
   base.push('stepPerfil','stepComplementares','stepReferencias','stepDocumentos','stepObs');
   return base;
