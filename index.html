@@ -121,6 +121,31 @@ select{
 .opcao.consent input{margin-top:1px}
 .opcao.consent a{color:var(--cor-destaque);font-weight:600}
 
+/* Opção em duas linhas: a resposta e o que acontece depois */
+.opcao.dupla{align-items:flex-start;padding:15px 14px}
+.opcao.dupla input{margin-top:2px}
+.opcao .txt{display:flex;flex-direction:column;gap:2px}
+.opcao .txt b{font-weight:600;font-size:16px;line-height:1.3}
+.opcao .txt small{font-size:13.5px;color:var(--cor-suave);line-height:1.35}
+
+/* Caixa que ensina a regra ANTES da pergunta */
+.explica{background:var(--cor-superficie);border:1.5px solid var(--cor-borda);
+  border-left:4px solid var(--cor-verde);border-radius:var(--raio);
+  padding:14px 16px;margin-bottom:20px;font-size:14.5px;line-height:1.5}
+.explica b{color:var(--cor-destaque)}
+.explica.atencao{border-left-color:#e8a13a}
+
+/* Alerta forte da tela final: preencher a ficha não garante o aluguel.
+   Card único — a declaração legal vem dentro dele, em corpo menor. */
+.aviso-forte{background:#fff6e8;border:1.5px solid #f0c98a;border-radius:var(--raio);
+  padding:18px;max-width:390px;margin:0 auto;text-align:center}
+.aviso-forte b{display:block;color:#8a5a12;font-size:16.5px;font-weight:700;
+  margin-bottom:8px;line-height:1.3}
+.aviso-forte p{color:#6b4d18;font-size:14.5px;line-height:1.5}
+.aviso-forte .legal{margin-top:14px;padding-top:12px;border-top:1px solid #f0c98a;
+  font-size:12.5px;line-height:1.55;color:#8a7350}
+.aviso-forte .legal strong{color:#6b4d18;font-weight:600}
+
 /* Linha divisória entre referências/blocos */
 .divisor{border:none;border-top:1px solid var(--cor-borda);margin:24px 0}
 
@@ -215,14 +240,22 @@ select{
       <!-- ETAPA: INÍCIO (define se mostra o bloco "morador principal") -->
       <section class="step" id="stepInicio">
         <h2 class="etapa-titulo">Vamos começar</h2>
-        <p class="etapa-sub">O aluguel vai ficar no seu nome?</p>
+        <p class="etapa-sub">Quem vai assinar o contrato</p>
+
+        <div class="explica">
+          Para alugar, a seguradora precisa aprovar um <b>CPF</b>.<br>
+          O contrato fica no nome dessa pessoa.
+        </div>
 
         <div class="campo">
           <div class="opcoes" data-radio-req>
-            <label class="opcao"><input type="radio" name="quem_assina" value="Sim, vai ficar no meu nome"> Sim, vai ficar no meu nome</label>
-            <label class="opcao"><input type="radio" name="quem_assina" value="Não, vai ficar no nome de outra pessoa"> Não, vai ficar no nome de outra pessoa</label>
+            <!-- Os value= abaixo NÃO podem mudar: o JS (sequencia/respEhMorador)
+                 e o Make leem "Sim..." / "Não..." no começo do texto. -->
+            <label class="opcao dupla"><input type="radio" name="quem_assina" value="Sim, vai ficar no meu nome">
+              <span class="txt"><b>Foi o meu CPF</b><small>O contrato fica no meu nome</small></span></label>
+            <label class="opcao dupla"><input type="radio" name="quem_assina" value="Não, vai ficar no nome de outra pessoa">
+              <span class="txt"><b>Foi o CPF de outra pessoa</b><small>Vou informar os dados dela na próxima tela</small></span></label>
           </div>
-          <span class="dica">Exemplo: quando o seguro fiança não é aprovado no nome do próprio morador, marque "Não".</span>
         </div>
 
         <div class="erro-msg" data-erro>Selecione uma opção para continuar.</div>
@@ -234,28 +267,33 @@ select{
 
       <!-- ETAPA CONDICIONAL (só "Não"): DADOS DO RESPONSÁVEL — a outra pessoa -->
       <section class="step" id="stepLocatario">
-        <h2 class="etapa-titulo">Dados do responsável pelo aluguel</h2>
-        <p class="etapa-sub">A outra pessoa, que o aluguel vai ficar no nome. É dela que vêm a renda e os documentos.</p>
+        <h2 class="etapa-titulo">Dados de quem assina</h2>
+        <p class="etapa-sub">A pessoa que teve o CPF aprovado.</p>
+
+        <div class="explica">
+          É esta pessoa que <b>assina o contrato</b>.<br>
+          Você preenche os dados dela.
+        </div>
 
         <div class="campo">
-          <label>Nome completo do responsável <span class="req">*</span></label>
+          <label>Nome completo dela <span class="req">*</span></label>
           <input type="text" name="loc_nome" placeholder="Nome e sobrenome" data-cond-req>
         </div>
 
         <div class="linha">
           <div class="campo">
-            <label>Número do CPF <span class="req">*</span></label>
+            <label>CPF dela <span class="req">*</span></label>
             <input type="tel" name="loc_cpf" class="cpf-mask" placeholder="000.000.000-00" data-cond-req>
           </div>
         </div>
 
         <div class="linha">
           <div class="campo">
-            <label>Data de Nascimento <span class="req">*</span></label>
+            <label>Data de nascimento <span class="req">*</span></label>
             <input type="tel" name="loc_nascimento" class="data-mask" placeholder="00/00/0000" data-cond-req>
           </div>
           <div class="campo">
-            <label>Estado Civil <span class="req">*</span></label>
+            <label>Estado civil dela <span class="req">*</span></label>
             <select name="loc_estado_civil" data-cond-req>
               <option value="">Selecione</option>
               <option>Solteiro(a)</option><option>Casado(a)</option><option>União Estável</option>
@@ -265,13 +303,13 @@ select{
         </div>
 
         <div class="campo">
-          <label>Endereço atual <span class="req">*</span></label>
-          <textarea name="loc_endereco" placeholder="Rua, bairro, cidade, CEP" data-cond-req></textarea>
+          <label>Onde ela mora hoje <span class="req">*</span></label>
+          <textarea name="loc_endereco" placeholder="Rua, número, bairro, cidade, CEP" data-cond-req></textarea>
         </div>
 
         <div class="linha">
           <div class="campo">
-            <label>Número do WhatsApp <span class="req">*</span></label>
+            <label>WhatsApp dela <span class="req">*</span></label>
             <input type="tel" name="loc_whatsapp" class="tel-mask" placeholder="(00) 00000-0000" data-cond-req>
           </div>
           <div class="campo">
@@ -289,28 +327,30 @@ select{
 
       <!-- ETAPA: DADOS PROFISSIONAIS DO LOCATÁRIO -->
       <section class="step" id="stepLocatarioProf">
-        <h2 class="etapa-titulo">Renda e profissão</h2>
-        <p class="etapa-sub">De quem o aluguel vai ficar no nome (renda usada na análise do seguro).</p>
+        <h2 class="etapa-titulo">Renda de quem assina</h2>
+        <p class="etapa-sub">A Moralí usa esta informação para avaliar a proposta.</p>
 
         <div class="linha">
           <div class="campo">
-            <label>Profissão atual <span class="req">*</span></label>
-            <input type="text" name="loc_profissao" required>
+            <label>Em que trabalha <span class="req">*</span></label>
+            <input type="text" name="loc_profissao" placeholder="Ex.: pedreiro, vendedora" required>
           </div>
           <div class="campo">
-            <label>Tempo de serviço <span class="req">*</span></label>
+            <label>Há quanto tempo <span class="req">*</span></label>
             <input type="text" name="loc_tempo_servico" required>
           </div>
         </div>
 
         <div class="campo">
-          <label>Renda mensal <span class="req">*</span></label>
-          <input type="text" name="loc_renda" placeholder="R$" required>
+          <label>Quanto recebe por mês <span class="req">*</span></label>
+          <input type="text" name="loc_renda" placeholder="R$ 0,00" required>
+          <span class="dica">O valor que entra todo mês. Pode ser trabalho com carteira ou por conta própria.</span>
         </div>
 
         <div class="campo">
-          <label>Possui outra fonte de renda? Informe qual e o valor.</label>
-          <input type="text" name="loc_outra_renda">
+          <label>Recebe algum outro dinheiro por mês?</label>
+          <input type="text" name="loc_outra_renda" placeholder="Ex.: pensão R$ 600">
+          <span class="dica">Pensão, aluguel, bico. Escreva o que é e quanto. Se não tiver, deixe vazio.</span>
         </div>
 
         <div class="erro-msg" data-erro>Preencha os campos obrigatórios para continuar.</div>
@@ -322,28 +362,33 @@ select{
 
       <!-- ETAPA: CÔNJUGE — só aparece se o responsável for casado(a) / união estável -->
       <section class="step" id="stepConjugeLocatario">
-        <h2 class="etapa-titulo">Cônjuge / Companheiro(a)</h2>
-        <p class="etapa-sub">Como o responsável pelo aluguel é casado(a) ou tem união estável, precisamos dos dados do(a) cônjuge/companheiro(a).</p>
+        <h2 class="etapa-titulo">Marido ou esposa</h2>
+        <p class="etapa-sub">De quem vai assinar o contrato.</p>
+
+        <div class="explica">
+          Você marcou <b>casado(a)</b> ou <b>união estável</b>.<br>
+          A seguradora analisa as duas pessoas do casal.
+        </div>
 
         <div class="campo">
-          <label>Nome completo do cônjuge / companheiro(a) <span class="req">*</span></label>
+          <label>Nome completo <span class="req">*</span></label>
           <input type="text" name="conj_loc_nome" placeholder="Nome e sobrenome" data-cond-req>
         </div>
 
         <div class="linha">
           <div class="campo">
-            <label>Número do CPF <span class="req">*</span></label>
+            <label>CPF <span class="req">*</span></label>
             <input type="tel" name="conj_loc_cpf" class="cpf-mask" placeholder="000.000.000-00" data-cond-req>
           </div>
         </div>
 
         <div class="linha">
           <div class="campo">
-            <label>Data de Nascimento <span class="req">*</span></label>
+            <label>Data de nascimento <span class="req">*</span></label>
             <input type="tel" name="conj_loc_nascimento" class="data-mask" placeholder="00/00/0000" data-cond-req>
           </div>
           <div class="campo">
-            <label>Número do WhatsApp <span class="req">*</span></label>
+            <label>WhatsApp <span class="req">*</span></label>
             <input type="tel" name="conj_loc_whatsapp" class="tel-mask" placeholder="(00) 00000-0000" data-cond-req>
           </div>
         </div>
@@ -357,8 +402,12 @@ select{
 
       <!-- ETAPA: SEUS DADOS (morador que preenche) — sempre -->
       <section class="step" id="stepMorador">
-        <h2 class="etapa-titulo">Seus dados</h2>
+        <h2 class="etapa-titulo">Agora os seus dados</h2>
         <p class="etapa-sub">Você, que vai morar no imóvel.</p>
+
+        <div class="explica">
+          A Moralí precisa saber <b>quem vai morar</b> na casa.
+        </div>
 
         <div class="campo">
           <label>Seu nome completo <span class="req">*</span></label>
@@ -367,18 +416,18 @@ select{
 
         <div class="linha">
           <div class="campo">
-            <label>Número do CPF <span class="req">*</span></label>
+            <label>Seu CPF <span class="req">*</span></label>
             <input type="tel" name="mor_cpf" class="cpf-mask" placeholder="000.000.000-00" required>
           </div>
         </div>
 
         <div class="linha">
           <div class="campo">
-            <label>Data de Nascimento <span class="req">*</span></label>
+            <label>Data de nascimento <span class="req">*</span></label>
             <input type="tel" name="mor_nascimento" class="data-mask" placeholder="00/00/0000" required>
           </div>
           <div class="campo">
-            <label>Estado Civil <span class="req">*</span></label>
+            <label>Seu estado civil <span class="req">*</span></label>
             <select name="mor_estado_civil" required>
               <option value="">Selecione</option>
               <option>Solteiro(a)</option><option>Casado(a)</option><option>União Estável</option>
@@ -388,18 +437,18 @@ select{
         </div>
 
         <div class="campo">
-          <label>Endereço atual <span class="req">*</span></label>
-          <textarea name="mor_endereco" placeholder="Rua, bairro, cidade, CEP" required></textarea>
+          <label>Onde você mora hoje <span class="req">*</span></label>
+          <textarea name="mor_endereco" placeholder="Rua, número, bairro, cidade, CEP" required></textarea>
         </div>
 
         <div class="linha">
           <div class="campo">
-            <label>Número do WhatsApp <span class="req">*</span></label>
+            <label>Seu WhatsApp <span class="req">*</span></label>
             <input type="tel" name="mor_whatsapp" class="tel-mask" placeholder="(00) 00000-0000" required>
           </div>
           <div class="campo">
-            <label>E-mail <span class="req">*</span></label>
-            <input type="email" name="mor_email" placeholder="exemplo@exemplo.com" required>
+            <label>E-mail</label>
+            <input type="email" name="mor_email" placeholder="exemplo@exemplo.com">
           </div>
         </div>
 
@@ -412,17 +461,18 @@ select{
 
       <!-- ETAPA: PERFIL DE QUEM VAI MORAR (sempre) -->
       <section class="step" id="stepPerfil">
-        <h2 class="etapa-titulo">Perfil de quem vai morar</h2>
-        <p class="etapa-sub">Informações sobre o dia a dia no imóvel.</p>
+        <h2 class="etapa-titulo">Sobre você</h2>
+        <p class="etapa-sub">Três perguntas rápidas.</p>
 
         <div class="campo">
-          <label>Atualmente reside em um imóvel? <span class="req">*</span></label>
+          <label>Onde você mora hoje? <span class="req">*</span></label>
+          <!-- value= mantido igual ao que já chega no Make; muda só o texto na tela -->
           <select name="perfil_reside" required>
             <option value="">Selecione</option>
-            <option>Sim, alugado</option>
-            <option>Sim, próprio</option>
-            <option>Sim, de familiares</option>
-            <option>Não</option>
+            <option value="Sim, alugado">Em casa alugada</option>
+            <option value="Sim, próprio">Em casa própria</option>
+            <option value="Sim, de familiares">Na casa de familiares</option>
+            <option value="Não">Outra situação</option>
           </select>
         </div>
 
@@ -430,17 +480,17 @@ select{
           <label>Tem animal de estimação? <span class="req">*</span></label>
           <select name="perfil_animal" required>
             <option value="">Selecione</option>
-            <option>Não</option>
-            <option>Sim, 1</option>
-            <option>Sim, 2</option>
-            <option>Sim, 3 ou mais</option>
+            <option value="Não">Não tenho</option>
+            <option value="Sim, 1">Sim, 1 animal</option>
+            <option value="Sim, 2">Sim, 2 animais</option>
+            <option value="Sim, 3 ou mais">Sim, 3 ou mais</option>
           </select>
         </div>
 
         <div class="campo">
-          <label>Qual é o seu Instagram / Facebook?</label>
+          <label>Seu Instagram ou Facebook</label>
           <input type="text" name="perfil_social" placeholder="@seu_usuario">
-          <span class="dica">Informe o nome do seu usuário.</span>
+          <span class="dica">Só o nome de usuário. Não é obrigatório.</span>
         </div>
 
         <div class="erro-msg" data-erro>Preencha os campos obrigatórios para continuar.</div>
@@ -452,11 +502,11 @@ select{
 
       <!-- ETAPA: DADOS COMPLEMENTARES -->
       <section class="step" id="stepComplementares">
-        <h2 class="etapa-titulo">Dados complementares</h2>
-        <p class="etapa-sub">Quase lá.</p>
+        <h2 class="etapa-titulo">Últimos detalhes</h2>
+        <p class="etapa-sub">Faltam duas perguntas.</p>
 
         <div class="campo">
-          <label>Data de pagamento do aluguel <span class="req">*</span></label>
+          <label>Em que dia você prefere pagar o aluguel? <span class="req">*</span></label>
           <div class="opcoes duas" data-radio-req>
             <label class="opcao"><input type="radio" name="data_pagamento" value="Dia 05"> Dia 05</label>
             <label class="opcao"><input type="radio" name="data_pagamento" value="Dia 10"> Dia 10</label>
@@ -464,9 +514,9 @@ select{
         </div>
 
         <div class="campo">
-          <label>Quantas pessoas irão residir no imóvel? <span class="req">*</span></label>
-          <textarea name="qtd_pessoas" placeholder="Relacione o nome e a idade aproximada de cada um." required></textarea>
-          <span class="dica">Informe também a idade aproximada de cada uma.</span>
+          <label>Quem vai morar na casa? <span class="req">*</span></label>
+          <textarea name="qtd_pessoas" placeholder="Maria Silva, 34 anos&#10;João Silva, 8 anos" required></textarea>
+          <span class="dica">Escreva o nome e a idade de cada pessoa, uma por linha. Conte você também.</span>
         </div>
 
         <div class="erro-msg" data-erro>Preencha os campos obrigatórios para continuar.</div>
@@ -478,20 +528,25 @@ select{
 
       <!-- ETAPA: REFERÊNCIAS PESSOAIS -->
       <section class="step" id="stepReferencias">
-        <h2 class="etapa-titulo">Referências pessoais</h2>
-        <p class="etapa-sub alerta">❌ Não pode ser familiares (pai, mãe, tio, avó).</p>
+        <h2 class="etapa-titulo">Duas pessoas que conhecem você</h2>
+        <p class="etapa-sub">A Moralí pode ligar para elas.</p>
+
+        <div class="explica atencao">
+          <b>Não pode ser parente.</b><br>
+          Nada de pai, mãe, irmão, tio ou avó. Pode ser amigo, vizinho ou colega de trabalho.
+        </div>
 
         <div class="campo">
-          <label>Nome (referência 01) <span class="req">*</span></label>
+          <label>Nome da 1ª pessoa <span class="req">*</span></label>
           <input type="text" name="ref1_nome" required>
         </div>
         <div class="linha">
           <div class="campo">
-            <label>Tipo de relação <span class="req">*</span></label>
-            <input type="text" name="ref1_relacao" placeholder="amigo, vizinho..." required>
+            <label>Como você conhece <span class="req">*</span></label>
+            <input type="text" name="ref1_relacao" placeholder="amigo, vizinho" required>
           </div>
           <div class="campo">
-            <label>WhatsApp <span class="req">*</span></label>
+            <label>WhatsApp dela <span class="req">*</span></label>
             <input type="tel" name="ref1_whatsapp" class="tel-mask" placeholder="(00) 00000-0000" required>
           </div>
         </div>
@@ -499,16 +554,16 @@ select{
         <hr class="divisor">
 
         <div class="campo">
-          <label>Nome (referência 02) <span class="req">*</span></label>
+          <label>Nome da 2ª pessoa <span class="req">*</span></label>
           <input type="text" name="ref2_nome" required>
         </div>
         <div class="linha">
           <div class="campo">
-            <label>Tipo de relação <span class="req">*</span></label>
-            <input type="text" name="ref2_relacao" placeholder="amigo, vizinho..." required>
+            <label>Como você conhece <span class="req">*</span></label>
+            <input type="text" name="ref2_relacao" placeholder="amigo, vizinho" required>
           </div>
           <div class="campo">
-            <label>WhatsApp <span class="req">*</span></label>
+            <label>WhatsApp dela <span class="req">*</span></label>
             <input type="tel" name="ref2_whatsapp" class="tel-mask" placeholder="(00) 00000-0000" required>
           </div>
         </div>
@@ -522,16 +577,21 @@ select{
 
       <!-- ETAPA: ANEXAR DOCUMENTOS -->
       <section class="step" id="stepDocumentos">
-        <h2 class="etapa-titulo">Anexar documentos</h2>
-        <p class="etapa-sub">Do responsável pelo aluguel (a pessoa analisada pelo seguro).</p>
+        <h2 class="etapa-titulo">Fotos dos documentos</h2>
+        <p class="etapa-sub">Da pessoa que assina o contrato.</p>
+
+        <div class="explica">
+          Pode ser <b>foto tirada pelo celular</b>. Só precisa dar para ler.<br>
+          Não tem agora? Toque em Avançar e mande depois pelo WhatsApp.
+        </div>
 
         <div class="upload">
-          <label>Foto frente e verso da CNH ou RG (documento com foto)</label>
+          <label>RG ou CNH — frente e verso</label>
           <label class="dropzone" id="dz_rg">
             <span class="conteudo-dz">
               <span class="nuvem">⬆️</span>
-              <span class="acao">Pesquisar arquivos</span>
-              <span class="sub">Toque para selecionar (foto ou PDF)</span>
+              <span class="acao">Escolher foto</span>
+              <span class="sub">Toque aqui para tirar ou buscar a foto</span>
             </span>
             <input type="file" accept="image/*,application/pdf" data-doc="doc_rg_cnh">
           </label>
@@ -542,8 +602,8 @@ select{
           <label class="dropzone" id="dz_renda">
             <span class="conteudo-dz">
               <span class="nuvem">⬆️</span>
-              <span class="acao">Pesquisar arquivos</span>
-              <span class="sub">Toque para selecionar (foto ou PDF)</span>
+              <span class="acao">Escolher foto</span>
+              <span class="sub">Holerite, extrato do banco ou declaração</span>
             </span>
             <input type="file" accept="image/*,application/pdf" data-doc="doc_renda">
           </label>
@@ -554,14 +614,14 @@ select{
           <label class="dropzone" id="dz_end">
             <span class="conteudo-dz">
               <span class="nuvem">⬆️</span>
-              <span class="acao">Pesquisar arquivos</span>
-              <span class="sub">Toque para selecionar (foto ou PDF)</span>
+              <span class="acao">Escolher foto</span>
+              <span class="sub">Conta de luz, água ou telefone</span>
             </span>
             <input type="file" accept="image/*,application/pdf" data-doc="doc_endereco">
           </label>
         </div>
 
-        <span class="dica">Se preferir, você pode pular esta etapa e enviar os documentos depois pelo WhatsApp.</span>
+        
 
         <div class="erro-msg" data-erro></div>
         <div class="nav">
@@ -572,12 +632,12 @@ select{
 
       <!-- ETAPA: OBSERVAÇÃO + ACEITE LGPD + ENVIO -->
       <section class="step" id="stepObs">
-        <h2 class="etapa-titulo">Observações</h2>
-        <p class="etapa-sub">Deseja informar alguma observação ou comentário?</p>
+        <h2 class="etapa-titulo">Quer nos contar mais alguma coisa?</h2>
+        <p class="etapa-sub">Esta parte não é obrigatória.</p>
 
         <div class="campo">
-          <label>Observação ou comentário</label>
-          <textarea name="observacao"></textarea>
+          <label>Escreva aqui, se quiser</label>
+          <textarea name="observacao" placeholder="Ex.: preciso mudar até o fim do mês"></textarea>
         </div>
 
         <!-- Aceite LGPD: obrigatório para enviar -->
@@ -610,10 +670,12 @@ select{
       <div class="hero-mark-ok">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
       </div>
-      <h1>Obrigado!</h1>
-      <p class="thanks-lead">Recebemos sua proposta. Em breve entraremos em contato pelo WhatsApp.</p>
-      <div class="declaracao">
-        <p>O mero preenchimento e entrega da proposta <strong>não obriga ao fechamento do contrato</strong>, que somente ocorrerá se houver aprovação da análise de ficha.</p>
+      <h1>Recebemos sua ficha!</h1>
+      <p class="thanks-lead">Entraremos em contato pelo WhatsApp.</p>
+      <div class="aviso-forte">
+        <b>Atenção: isto ainda não é o contrato de aluguel.</b>
+        <p>A ficha vai para análise. A chave só é entregue depois da análise aprovada e do contrato assinado.</p>
+        <p class="legal">O mero preenchimento e entrega da proposta <strong>não obriga ao fechamento do contrato</strong>, que somente ocorrerá se houver aprovação da análise de ficha.</p>
       </div>
     </section>
 
