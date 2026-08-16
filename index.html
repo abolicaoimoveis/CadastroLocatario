@@ -613,12 +613,21 @@ select{
     <!-- ============================================================= -->
     <!-- ====== PONTO DE CONFIGURAÇÃO 3: TEXTO DE AGRADECIMENTO ======= -->
     <!-- ============================================================= -->
+    <!-- ARMADILHA DE ROBÔ: fora da tela, sem rótulo. Gente não preenche. -->
+    <input type="text" id="confirme-email" name="confirme-email" tabindex="-1"
+           autocomplete="off" aria-hidden="true"
+           style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+
     <section class="screen" id="thanks">
       <div class="hero-mark-ok">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
       </div>
       <h1>Obrigado!</h1>
       <p class="thanks-lead">Recebemos sua proposta. Em breve entraremos em contato pelo WhatsApp.</p>
+      <p style="font-size:15px">Seu protocolo é
+        <b id="protocolo" style="letter-spacing:1px">—</b>.<br>
+        <span style="font-size:13px;opacity:.75">Guarde esse número: é por ele que
+        encontramos sua proposta se você precisar falar com a gente.</span></p>
       <div class="declaracao">
         <p>O mero preenchimento e entrega da proposta <strong>não obriga ao fechamento do contrato</strong>, que somente ocorrerá se houver aprovação da análise de ficha.</p>
       </div>
@@ -641,18 +650,35 @@ select{
    diferentes e vão bagunçar o cenário antigo.
    (Você vai preencher isso na ETAPA 3 do nosso plano.)
    ===================================================================== */
-const WEBHOOK_URL = "https://hook.us2.make.com/b7lr6bee2hw3dpbjyzlywlghpipmrosd";  // webhook do cenário Proposta Locatario
 /* =====================================================================
-   ====== PONTO DE CONFIGURAÇÃO 5: SUPABASE (DOCUMENTOS) ===============
-   Os documentos vão DIRETO para o seu Supabase (bucket privado), e só
-   o NOME do arquivo viaja para o Make/planilha. Assim a planilha nunca
-   recebe a imagem inteira.
-   - SUPABASE_ANON: cole sua chave "anon / public"
-     (Supabase → Settings → API Keys). NÃO use a service_role.
+   ====== CONFIGURAÇÃO — v2, agosto/2026 =========================
+   O webhook do Make saiu: estava escrito nesta página, sem autenticação
+   nenhuma. A página agora fala com o banco por duas portas que só sabem
+   fazer uma coisa cada. A chave abaixo é PÚBLICA de propósito — é a
+   mesma do CRM, e sozinha não abre tabela nenhuma.
    ===================================================================== */
-const SUPABASE_URL    = "https://gcoikoeiuwaygjjwedjp.supabase.co";
-const SUPABASE_BUCKET = "documentos-locatarios";
-const SUPABASE_ANON   = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdjb2lrb2VpdXdheWdqandlZGpwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2MTAyODQsImV4cCI6MjA5NDE4NjI4NH0.B_DXIbf-asPDhe_lVG7pKT1jMLuDmqsLopmfsEjYfZs";
+const SUPABASE_URL = "https://gcoikoeiuwaygjjwedjp.supabase.co";
+const SUPABASE_KEY = "sb_publishable_ChTppJgR6vesRWLG_9rQ5A_HZgNv6Kn";
+const TIPO_FICHA   = "Locatário";
+const BUCKET       = "documentos-locatarios";
+
+const ABERTO_EM = Date.now();
+
+async function rpc(funcao, args){
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/rpc/${funcao}`, {
+    method: 'POST',
+    headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY,
+               'Content-Type': 'application/json' },
+    body: JSON.stringify(args)
+  });
+  const txt = await r.text();
+  if(!r.ok){
+    let msg = txt;
+    try { msg = (JSON.parse(txt).message) || txt; } catch(e){}
+    throw new Error(msg);
+  }
+  return txt ? JSON.parse(txt) : null;
+}
 
 /* ---- daqui pra baixo é a "mágica"; normalmente você não mexe ---- */
 
@@ -868,24 +894,31 @@ function dataURLparaBlob(dataURL){
 /* ---------- Sobe UM arquivo direto pro Supabase (bucket privado) ----------
    Retorna o NOME do arquivo salvo (caminho dentro do bucket).
    É esse nome que vai pro Make/planilha — a imagem em si nunca passa por lá. */
-async function enviarParaSupabase(processado, chave){
+async function enviarParaSupabase(processado, chave, token){
+  // Cai em {token}/nome — é o token que autoriza a gravação. Sem ele o
+  // balde recusa, e é isso que impede usarem o Storage como hospedagem.
   const blob = dataURLparaBlob(processado.data);
   const ext  = (processado.name.split('.').pop() || 'jpg').toLowerCase().replace(/[^a-z0-9]/g,'');
-  const aleatorio = Math.random().toString(36).slice(2,8);
-  const caminho = `${Date.now()}_${chave}_${aleatorio}.${ext}`;
+  const caminho = `${token}/${Date.now()}_${chave}.${ext}`;
 
-  const resp = await fetch(`${SUPABASE_URL}/storage/v1/object/${SUPABASE_BUCKET}/${caminho}`, {
+  const resp = await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/${caminho}`, {
     method:'POST',
     headers:{
-      'Authorization': 'Bearer ' + SUPABASE_ANON,
-      'apikey': SUPABASE_ANON,
+      'Authorization': 'Bearer ' + SUPABASE_KEY,
+      'apikey': SUPABASE_KEY,
       'Content-Type': processado.type || 'application/octet-stream',
       'x-upsert': 'false'
     },
     body: blob
   });
-  if(!resp.ok) throw new Error('Falha no upload (' + resp.status + ')');
-  return caminho;
+  if(!resp.ok){
+    const t = await resp.text();
+    throw new Error(resp.status === 413 ? 'o arquivo passa de 10 MB'
+                  : (resp.status === 415 ? 'esse tipo de arquivo não é aceito'
+                  : ('erro ' + resp.status + ' ' + t.slice(0,80))));
+  }
+  return { bucket: BUCKET, caminho, nome: processado.name,
+           tamanho: blob.size, tipo: processado.type || '', campo: chave };
 }
 
 /* ---------- Envio final ---------- */
@@ -930,33 +963,55 @@ async function enviar(){
     ['nome','cpf','rg','nascimento','whatsapp'].forEach(c=>{ dados['conj_loc_'+c] = ''; });
   }
 
-  // Sobe os documentos pro Supabase e guarda só o NOME de cada um.
-  for(const k of Object.keys(arquivos)){
-    try{
-      const caminho = await enviarParaSupabase(arquivos[k], k);
-      dados[k]          = caminho;            // ex.: doc_rg_cnh = "1712..._doc_rg_cnh_x9.jpg"
-      dados[k + '_nome'] = arquivos[k].name;  // nome original (só para referência)
-    }catch(e){
-      dados[k]          = 'ERRO_UPLOAD';
-      dados[k + '_nome'] = arquivos[k].name;
-    }
-  }
-
   const params = new URLSearchParams(window.location.search);
   dados.parceiro   = params.get('parceiro') || '';
   dados.data_envio = new Date().toLocaleString('pt-BR');
 
   try{
-    if(WEBHOOK_URL){
-      await fetch(WEBHOOK_URL, {
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify(dados)
-      });
-    } else {
-      console.log('Dados que seriam enviados:', dados);
-      await new Promise(r=>setTimeout(r,800));
+    // 1) abre a ficha e recebe o token e o PROTOCOLO
+    const inicio = await rpc('ficha_iniciar', {
+      p_tipo: TIPO_FICHA,
+      p_parceiro: dados.parceiro
+    });
+
+    // 2) sobe os três documentos. FALHA AQUI NÃO É MAIS SILENCIOSA:
+    //    antes gravava "ERRO_UPLOAD" no campo e mostrava "Obrigado!" do
+    //    mesmo jeito — a pessoa ia embora achando que tinha mandado.
+    const anexos = [];
+    const falhas = [];
+    for(const k of Object.keys(arquivos)){
+      try{
+        anexos.push(await enviarParaSupabase(arquivos[k], k, inicio.token));
+        dados[k + '_nome'] = arquivos[k].name;
+      }catch(e){
+        falhas.push(rotuloDoc(k) + ' (' + e.message + ')');
+      }
     }
+    if(falhas.length){
+      const seguir = confirm(
+        'Não consegui enviar:\n\n· ' + falhas.join('\n· ') +
+        '\n\nQuer enviar a proposta mesmo assim? Você poderá mandar ' +
+        'esses documentos depois pelo WhatsApp.');
+      if(!seguir){
+        btn.disabled = false;
+        btn.innerHTML = 'Enviar proposta';
+        return;
+      }
+    }
+
+    // 3) fecha a ficha
+    await rpc('ficha_enviar', {
+      p_token: inicio.token,
+      p_dados: dados,
+      p_anexos: anexos,
+      p_armadilha: (document.getElementById('confirme-email') || {}).value || '',
+      p_segundos: Math.round((Date.now() - ABERTO_EM) / 1000)
+    });
+
+    localStorage.removeItem(RASCUNHO);
+
+    const alvo = document.getElementById('protocolo');
+    if(alvo) alvo.textContent = inicio.protocolo || '';
     document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
     progressFill.style.width = '100%';
     thanks.classList.add('active');
@@ -964,9 +1019,63 @@ async function enviar(){
   }catch(err){
     btn.disabled = false;
     btn.innerHTML = 'Enviar proposta';
-    alert('Não conseguimos enviar agora. Verifique sua internet e tente novamente.');
+    alert('Não conseguimos enviar agora: ' + (err.message || '') +
+          '\n\nSuas respostas ficaram guardadas neste aparelho — ' +
+          'é só tentar de novo.');
   }
 }
+
+/** O nome que a pessoa reconhece, para a mensagem de falha dizer qual
+ *  documento não subiu. "doc_rg_cnh (erro 415)" não ajuda ninguém. */
+function rotuloDoc(chave){
+  return ({ doc_rg_cnh:  'o RG ou CNH',
+            doc_renda:   'o comprovante de renda',
+            doc_endereco:'o comprovante de endereço' })[chave] || chave;
+}
+
+/* =====================================================================
+   RASCUNHO NO APARELHO
+   Esta proposta é longa: locatário, cônjuge, morador, renda, perfil e
+   duas referências. Perder tudo por uma ligação que entrou é o jeito
+   mais fácil de a pessoa não voltar. Nada sai do aparelho dela.
+   ===================================================================== */
+const RASCUNHO = 'morali-ficha-locatario';
+
+function guardarRascunho(){
+  try{
+    const fd = new FormData(document.getElementById('form'));
+    const o = {}; fd.forEach((v,k)=>{ if(k !== 'confirme-email') o[k] = v; });
+    localStorage.setItem(RASCUNHO, JSON.stringify({ em: Date.now(), d: o }));
+  }catch(e){}
+}
+
+function lerRascunho(){
+  try{
+    const g = JSON.parse(localStorage.getItem(RASCUNHO) || 'null');
+    if(!g || !g.d) return;
+    if(Date.now() - g.em > 7*24*3600*1000){ localStorage.removeItem(RASCUNHO); return; }
+    let achou = 0;
+    for(const [k,v] of Object.entries(g.d)){
+      const el = document.querySelector(`[name="${k}"]`);
+      if(el && !el.value && v){ el.value = v; achou++; }
+    }
+    if(achou > 3){
+      const aviso = document.createElement('div');
+      aviso.style.cssText = 'background:#EDF3F6;padding:10px 14px;border-radius:8px;'
+                          + 'font-size:13.5px;margin-bottom:14px';
+      aviso.innerHTML = 'Recuperamos o que você já tinha preenchido. '
+        + '<a href="#" id="limpar-rascunho" style="color:inherit">Começar do zero</a>';
+      const alvo = document.querySelector('.screen.active') || document.body;
+      alvo.prepend(aviso);
+      document.getElementById('limpar-rascunho').onclick = e => {
+        e.preventDefault(); localStorage.removeItem(RASCUNHO); location.reload();
+      };
+    }
+  }catch(e){}
+}
+
+document.addEventListener('input', guardarRascunho);
+document.addEventListener('DOMContentLoaded', lerRascunho);
 </script>
 </body>
 </html>
