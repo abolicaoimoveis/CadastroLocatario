@@ -296,7 +296,7 @@ select{
             <label>Estado civil dela <span class="req">*</span></label>
             <select name="loc_estado_civil" data-cond-req>
               <option value="">Selecione</option>
-              <option>Solteiro(a)</option><option>Casado(a)</option><option>União Estável</option>
+              <option>Solteiro(a)</option><option>Casado(a)</option><option>União estável</option>
               <option>Divorciado(a)</option><option>Separado(a)</option><option>Viúvo(a)</option>
             </select>
           </div>
@@ -430,7 +430,7 @@ select{
             <label>Seu estado civil <span class="req">*</span></label>
             <select name="mor_estado_civil" required>
               <option value="">Selecione</option>
-              <option>Solteiro(a)</option><option>Casado(a)</option><option>União Estável</option>
+              <option>Solteiro(a)</option><option>Casado(a)</option><option>União estável</option>
               <option>Divorciado(a)</option><option>Separado(a)</option><option>Viúvo(a)</option>
             </select>
           </div>
@@ -773,7 +773,14 @@ function precisaConjuge(ehNao){
     ? document.querySelector('select[name=loc_estado_civil]')
     : document.querySelector('select[name=mor_estado_civil]');
   const valor = campo ? campo.value : '';
-  return valor === 'Casado(a)' || valor === 'União Estável';
+  // 24/08/2026 — comparação sem depender de maiúscula/acento. A opção
+  // dizia "União Estável" com E grande, e o CRM só aceita "União
+  // estável" (é o CHECK contatos_estado_civil_check); a opção foi
+  // corrigida acima, mas comparar assim impede que a etapa do cônjuge
+  // suma de novo se um dia alguém reescrever o rótulo.
+  const chave = valor.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                     .toLowerCase().replace(/[^a-z]/g, '');
+  return chave === 'casadoa' || chave === 'uniaoestavel';
 }
 
 function mostrarEtapa(i){
