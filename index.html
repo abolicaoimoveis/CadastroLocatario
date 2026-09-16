@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Cadastro de Imóvel — Moralí</title>
+<title>Proposta de Locação — Moralí</title>
 
 <!-- Fonte oficial da Moralí: Outfit -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,22 +13,21 @@
 <style>
 /* =====================================================================
    ====== PONTO DE CONFIGURAÇÃO 1: CORES E LOGO ========================
-   Cores oficiais da Moralí já aplicadas.
+   Mesmas cores do formulário do Locador.
    ===================================================================== */
 :root{
-  --cor-fundo:        #eef2f4;  /* fundo geral (cinza claro) */
-  --cor-superficie:   #ffffff;  /* fundo dos cartões */
-  --cor-texto:        #0a2230;  /* texto principal */
-  --cor-suave:        #5b7384;  /* textos de ajuda */
-  --cor-destaque:     #023047;  /* AZUL PETRÓLEO — cor principal da marca */
-  --cor-destaque-2:   #06425e;  /* tom pro hover dos botões */
-  --cor-verde:        #70d262;  /* VERDE CHECK — confirmação */
-  --cor-borda:        #d8e0e5;  /* bordas dos campos */
+  --cor-fundo:        #eef2f4;
+  --cor-superficie:   #ffffff;
+  --cor-texto:        #0a2230;
+  --cor-suave:        #5b7384;
+  --cor-destaque:     #023047;  /* AZUL PETRÓLEO — cor principal */
+  --cor-destaque-2:   #06425e;
+  --cor-verde:        #70d262;
+  --cor-borda:        #d8e0e5;
   --cor-erro:         #c0392b;
-  --raio:             14px;     /* arredondamento */
+  --raio:             14px;
 }
 
-/* Reset básico */
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%}
 body{
@@ -39,10 +38,8 @@ body{
   min-height:100vh;
   display:flex;
   justify-content:center;
-  padding:0;
 }
 
-/* Container principal — pensado pra celular */
 .wrap{
   width:100%;
   max-width:480px;
@@ -54,132 +51,48 @@ body{
 }
 
 /* Barra de progresso */
-.progress{
-  position:sticky;top:0;z-index:10;
-  height:4px;width:100%;
-  background:var(--cor-borda);
-}
-.progress-fill{
-  height:100%;width:0%;
-  background:var(--cor-verde);
-  border-radius:0 4px 4px 0;
-  transition:width .35s ease;
-}
+.progress{position:sticky;top:0;z-index:10;height:4px;width:100%;background:var(--cor-borda)}
+.progress-fill{height:100%;width:0%;background:var(--cor-verde);border-radius:0 4px 4px 0;transition:width .35s ease}
 
-/* Cabeçalho com o logo */
-.topo{
-  text-align:center;
-  padding:22px 24px 6px;
-}
-/* ===== LOGO =====
-   Suba a imagem do logo no GitHub (mesmo lugar do index.html) com o nome
-   logo.png — ela aparece automaticamente aqui. */
-.logo-img{
-  height:40px;
-  width:auto;
-}
+/* Cabeçalho / Logo */
+.topo{text-align:center;padding:22px 24px 6px}
+.logo-img{height:40px;width:auto}
 
-/* Régua de fases (Proprietário / Imóvel / Valores) */
-.stepper{
-  display:flex;justify-content:space-between;align-items:flex-start;
-  gap:6px;padding:2px 24px 12px;position:relative;
-  width:100%;max-width:480px;margin:0 auto;
-}
-.stepper::before{
-  content:"";position:absolute;top:9px;left:18%;right:18%;
-  height:2px;background:var(--cor-borda);z-index:0;
-}
-.step-item{display:flex;flex-direction:column;align-items:center;gap:7px;flex:1;z-index:1}
-.step-dot{
-  width:18px;height:18px;border-radius:50%;
-  background:var(--cor-borda);transition:background .3s;
-}
-.step-label{
-  font-size:11px;font-weight:600;letter-spacing:.02em;text-transform:uppercase;
-  color:var(--cor-suave);text-align:center;
-}
-.step-item.done .step-dot{background:var(--cor-verde)}
-.step-item.active .step-dot{background:var(--cor-destaque)}
-.step-item.active .step-label{color:var(--cor-destaque)}
+.conteudo{flex:1;padding:8px 24px 32px}
 
-/* Conteúdo */
-.conteudo{
-  flex:1;
-  padding:8px 24px 32px;
-}
-
-/* Telas (boas-vindas / obrigado) e etapas: só uma visível por vez */
 .screen,.step{display:none;animation:surge .4s ease both}
 .screen.active,.step.active{display:block}
 @keyframes surge{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 
-/* ===== Tela de boas-vindas ===== */
-#welcome{text-align:center;padding-top:34px}
-#welcome .hero-icone{
-  width:64px;height:64px;margin:0 auto 22px;
-  border-radius:50%;
-  display:grid;place-items:center;
-  background:var(--cor-destaque);
-  color:#fff;font-size:28px;
-}
-#welcome h1{
-  font-family:'Outfit',sans-serif;
-  font-weight:700;
-  font-size:30px;
-  line-height:1.15;
-  margin-bottom:14px;
-  color:var(--cor-destaque);
-}
-#welcome p{color:var(--cor-suave);font-size:16px;margin-bottom:8px}
-#welcome .meta{
-  font-size:13px;color:var(--cor-suave);
-  margin-top:18px;
-}
+/* Tela de boas-vindas */
+#welcome{text-align:center;padding-top:30px}
+#welcome .eyebrow{display:block;font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#3f9a52;margin-bottom:18px}
+#welcome .hero-mark{width:96px;height:96px;margin:0 auto 24px;border-radius:50%;display:grid;place-items:center;background:rgba(2,48,71,.05);box-shadow:inset 0 0 0 1px rgba(2,48,71,.07)}
+#welcome .hero-mark svg{width:50px;height:50px}
+#welcome h1{font-weight:700;font-size:31px;line-height:1.12;letter-spacing:-.01em;margin-bottom:14px;color:var(--cor-destaque)}
+#welcome p{color:var(--cor-suave);font-size:15.5px;line-height:1.55;max-width:340px;margin:0 auto}
+#welcome .garantias{list-style:none;display:flex;flex-direction:column;gap:11px;width:fit-content;margin:24px auto 26px;padding:0}
+#welcome .garantias li{display:flex;align-items:center;gap:10px;font-size:14.5px;color:var(--cor-texto);font-weight:500}
+#welcome .garantias svg{width:19px;height:19px;color:var(--cor-destaque);flex-shrink:0}
 
 /* Títulos de etapa */
-.etapa-titulo{
-  font-family:'Outfit',sans-serif;
-  font-weight:700;
-  font-size:24px;
-  margin-bottom:4px;
-  color:var(--cor-destaque);
-}
+.etapa-titulo{font-weight:700;font-size:23px;margin-bottom:4px;color:var(--cor-destaque)}
 .etapa-sub{color:var(--cor-suave);font-size:14px;margin-bottom:22px}
+.etapa-sub.alerta{color:var(--cor-erro);font-weight:500}
 
 /* Campos */
 .campo{margin-bottom:20px}
-.campo label{
-  display:block;
-  font-weight:600;
-  font-size:15px;
-  margin-bottom:8px;
-}
+.campo label{display:block;font-weight:600;font-size:15px;margin-bottom:8px}
 .req{color:var(--cor-erro);margin-left:2px}
 .dica{display:block;font-weight:400;color:var(--cor-suave);font-size:13px;margin-top:4px}
 
-input[type=text],
-input[type=email],
-input[type=tel],
-input[type=number],
-input[type=date],
-select,
-textarea{
-  width:100%;
-  font-family:inherit;
-  font-size:16px; /* 16px evita o zoom automático no iPhone */
-  color:var(--cor-texto);
-  background:var(--cor-superficie);
-  border:1.5px solid var(--cor-borda);
-  border-radius:var(--raio);
-  padding:14px 15px;
-  transition:border-color .2s, box-shadow .2s;
+input[type=text],input[type=email],input[type=tel],input[type=number],select,textarea{
+  width:100%;font-family:inherit;font-size:16px;color:var(--cor-texto);
+  background:var(--cor-superficie);border:1.5px solid var(--cor-borda);
+  border-radius:var(--raio);padding:14px 15px;transition:border-color .2s, box-shadow .2s;
 }
 textarea{resize:vertical;min-height:96px}
-input:focus,select:focus,textarea:focus{
-  outline:none;
-  border-color:var(--cor-destaque);
-  box-shadow:0 0 0 3px rgba(2,48,71,.15);
-}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--cor-destaque);box-shadow:0 0 0 3px rgba(2,48,71,.15)}
 input.invalido,select.invalido,textarea.invalido{border-color:var(--cor-erro)}
 
 /* O TEXTO DE EXEMPLO NÃO É RESPOSTA (16/09/2026).
@@ -191,221 +104,113 @@ input.invalido,select.invalido,textarea.invalido{border-color:var(--cor-erro)}
    `opacity:1` porque o Firefox clareia o placeholder por conta. */
 ::placeholder{color:#93A0A8;opacity:1}
 
-/* Seta customizada nos selects */
 select{
   appearance:none;-webkit-appearance:none;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%235b7384' stroke-width='3'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;
-  background-position:right 15px center;
-  padding-right:42px;
+  background-repeat:no-repeat;background-position:right 15px center;padding-right:42px;
 }
 
-/* Dois campos lado a lado */
 .linha{display:flex;gap:12px}
 .linha .campo{flex:1}
 
-/* Checkboxes e opções */
-.checks{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-  gap:10px;
-}
-.radios{display:grid;gap:10px}
-.check{
+/* Cartões de escolha (radio / checkbox) */
+.opcoes{display:grid;gap:10px}
+.opcoes.duas{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.opcao{
   display:flex;align-items:center;gap:10px;
-  background:var(--cor-superficie);
-  border:1.5px solid var(--cor-borda);
-  border-radius:var(--raio);
-  padding:12px 14px;
-  cursor:pointer;
-  font-size:15px;
-  transition:border-color .2s, background .2s;
-}
-.check input{width:20px;height:20px;accent-color:var(--cor-destaque);flex-shrink:0}
-.check:has(input:checked){
-  border-color:var(--cor-destaque);
-  background:rgba(2,48,71,.05);
-}
-
-/* Área de upload do documento */
-.dropzone{
-  border:1.5px dashed var(--cor-borda);
-  border-radius:var(--raio);
-  padding:24px 16px;text-align:center;cursor:pointer;display:block;
-  transition:border-color .2s, background .2s;
-}
-.dropzone:hover{border-color:var(--cor-destaque);background:rgba(2,48,71,.03)}
-.dropzone svg{width:34px;height:34px;stroke:var(--cor-destaque);margin-bottom:8px}
-.dropzone p{font-size:14px;color:var(--cor-suave)}
-.dropzone .destaque{color:var(--cor-destaque);font-weight:600}
-.dropzone input[type=file]{display:none}
-.doc-sel{
-  display:none;align-items:center;gap:10px;margin-top:10px;
-  padding:10px 12px;background:#eef7ec;border-radius:var(--raio);font-size:14px;
-}
-.doc-sel.show{display:flex}
-.doc-sel .nome{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.doc-sel button{background:none;border:none;color:var(--cor-suave);font-size:20px;cursor:pointer;line-height:1}
-
-/* Caixa de consentimento (sem borda, alinhada ao topo) */
-.consent-check{
-  border:none;background:transparent;padding:0;
-  align-items:flex-start;font-size:14px;line-height:1.5;
-}
-.consent-check input{margin-top:2px}
-.consent-check a{color:var(--cor-destaque);font-weight:600}
-
-/* Aviso de privacidade no rodapé das etapas com dados pessoais */
-/* ===== Contador: dormitórios, banheiros, suítes, vagas =====
-   Substitui quatro <select> por quatro linhas de toque. O valor real
-   continua indo num <input type="hidden"> com o MESMO name de antes. */
-.contadores{display:grid;gap:10px;margin-bottom:20px}
-.contador{display:flex;align-items:center;justify-content:space-between;gap:12px;
   background:var(--cor-superficie);border:1.5px solid var(--cor-borda);
-  border-radius:var(--raio);padding:11px 12px 11px 16px}
-.contador>span{font-weight:600;font-size:15px}
-.contador .ctrl{display:flex;align-items:center;gap:4px}
-.contador .ctrl button{width:38px;height:38px;border-radius:10px;
-  border:1.5px solid var(--cor-borda);background:var(--cor-fundo);
-  font-size:20px;font-weight:700;color:var(--cor-destaque);cursor:pointer;
-  line-height:1;font-family:inherit;padding:0}
-.contador .ctrl button:disabled{opacity:.35;cursor:not-allowed}
-.contador .ctrl b{min-width:34px;text-align:center;font-size:17px;font-weight:700}
-
-/* Sim / Não lado a lado */
-.radios.duas{grid-template-columns:1fr 1fr}
-
-/* ===== Opções "soltas": sem o fundo branco, mantendo a borda =====
-   Só nos Sim/Não e no CPF/CNPJ. Os itens do condomínio e o aceite da LGPD
-   continuam em cartão branco. A borda preserva o alvo de toque; ao marcar,
-   o fundo azul-claro mostra de relance o que foi escolhido. */
-.radios.solto .check{background:transparent}
-
-/* A classe .marcado é posta por JS. O :has(input:checked) do CSS original
-   não repinta em todo aparelho quando a marcação muda — em alguns webviews
-   a opção escolhida ficava sem nenhum destaque. */
-.check.marcado{border-color:var(--cor-destaque);background:rgba(2,48,71,.05)}
-.radios.solto .check.marcado{background:rgba(2,48,71,.06)}
-.check-aceite.marcado{background:#e2f2de;border-color:#3f9a52}
-
-/* Aceite da LGPD: verde só na caixa que precisa ser marcada */
-.check-aceite{align-items:flex-start;font-size:14px;line-height:1.45;
-  background:#eef7ec;border-color:var(--cor-verde)}
-.check-aceite input{margin-top:1px;accent-color:#3f9a52}
-.check-aceite a{color:var(--cor-destaque);font-weight:600}
-.check-aceite:has(input:checked){background:#e2f2de;border-color:#3f9a52}
-
-/* Envio do documento: bloco destacado, para não passar batido */
-.bloco-doc{background:#eaf1f5;border:1.5px solid #c3d5e0;border-radius:var(--raio);
-  padding:16px 16px 14px}
-.bloco-doc>label{color:var(--cor-destaque)}
-.bloco-doc .dropzone{background:var(--cor-superficie);border-color:#b6cbd8}
-
-/* ===== Bloco opcional, fechado por padrão ===== */
-.opcional{border:1.5px dashed var(--cor-borda);border-radius:var(--raio);
-  padding:13px 15px;margin-bottom:20px;background:rgba(255,255,255,.55)}
-.opcional summary{cursor:pointer;font-weight:600;font-size:14.5px;
-  color:var(--cor-destaque);list-style:none}
-.opcional summary::-webkit-details-marker{display:none}
-.opcional summary::before{content:"+ ";font-weight:700}
-.opcional[open] summary::before{content:"− "}
-.opcional .campo{margin-top:16px;margin-bottom:16px}
-.opcional .campo:last-of-type{margin-bottom:4px}
-
-.aviso-lgpd{
-  background:#eef7ec;
-  border:1px solid var(--cor-verde);
-  border-radius:var(--raio);
-  padding:12px 14px;
-  font-size:13px;
-  color:var(--cor-texto);
-  margin-bottom:20px;
+  border-radius:var(--raio);padding:13px 14px;cursor:pointer;font-size:15px;
+  transition:border-color .2s, background .2s;
 }
+.opcao input{width:20px;height:20px;accent-color:var(--cor-destaque);flex-shrink:0}
+.opcao:has(input:checked){border-color:var(--cor-destaque);background:rgba(2,48,71,.05)}
 
-/* Mensagem de erro */
-.erro-msg{
-  color:var(--cor-erro);
-  font-size:13.5px;
-  margin-top:10px;
-  display:none;
+/* Aceite LGPD: texto longo, alinhado ao topo */
+.opcao.consent{align-items:flex-start;font-size:14px;line-height:1.45}
+.opcao.consent input{margin-top:1px}
+.opcao.consent a{color:var(--cor-destaque);font-weight:600}
+
+/* Opção em duas linhas: a resposta e o que acontece depois */
+.opcao.dupla{align-items:flex-start;padding:15px 14px}
+.opcao.dupla input{margin-top:2px}
+.opcao .txt{display:flex;flex-direction:column;gap:2px}
+.opcao .txt b{font-weight:600;font-size:16px;line-height:1.3}
+.opcao .txt small{font-size:13.5px;color:var(--cor-suave);line-height:1.35}
+
+/* Caixa que ensina a regra ANTES da pergunta */
+.explica{background:var(--cor-superficie);border:1.5px solid var(--cor-borda);
+  border-left:4px solid var(--cor-verde);border-radius:var(--raio);
+  padding:14px 16px;margin-bottom:20px;font-size:14.5px;line-height:1.5}
+.explica b{color:var(--cor-destaque)}
+.explica.atencao{border-left-color:#e8a13a}
+
+/* Alerta forte da tela final: preencher a ficha não garante o aluguel.
+   Card único — a declaração legal vem dentro dele, em corpo menor. */
+.aviso-forte{background:#fff6e8;border:1.5px solid #f0c98a;border-radius:var(--raio);
+  padding:18px;max-width:390px;margin:0 auto;text-align:center}
+.aviso-forte b{display:block;color:#8a5a12;font-size:16.5px;font-weight:700;
+  margin-bottom:8px;line-height:1.3}
+.aviso-forte p{color:#6b4d18;font-size:14.5px;line-height:1.5}
+.aviso-forte .legal{margin-top:14px;padding-top:12px;border-top:1px solid #f0c98a;
+  font-size:12.5px;line-height:1.55;color:#8a7350}
+.aviso-forte .legal strong{color:#6b4d18;font-weight:600}
+
+/* Linha divisória entre referências/blocos */
+.divisor{border:none;border-top:1px solid var(--cor-borda);margin:24px 0}
+
+/* Upload de documentos */
+.upload{margin-bottom:22px}
+.upload>label{display:block;font-weight:600;font-size:15px;margin-bottom:8px}
+.dropzone{
+  border:2px dashed var(--cor-borda);border-radius:var(--raio);
+  background:var(--cor-superficie);
+  padding:22px 16px;text-align:center;cursor:pointer;
+  transition:border-color .2s, background .2s;
 }
+.dropzone:hover{border-color:var(--cor-destaque)}
+.dropzone .nuvem{font-size:26px;color:var(--cor-destaque);display:block;margin-bottom:6px}
+.dropzone .acao{color:var(--cor-destaque);font-weight:600;font-size:15px}
+.dropzone .sub{color:var(--cor-suave);font-size:13px;margin-top:2px}
+.dropzone.tem-arquivo{border-style:solid;border-color:var(--cor-verde);background:rgba(112,210,98,.07)}
+.dropzone .nome-arquivo{color:var(--cor-texto);font-weight:600;font-size:14px;word-break:break-all}
+.upload input[type=file]{display:none}
+
+.erro-msg{color:var(--cor-erro);font-size:13.5px;margin-top:10px;display:none}
 .erro-msg.show{display:block}
 
-/* Botões de navegação */
-.nav{
-  display:flex;gap:12px;
-  margin-top:28px;
-}
-.btn{
-  font-family:inherit;font-weight:700;font-size:16px;
-  border:none;border-radius:var(--raio);
-  padding:15px 20px;cursor:pointer;
-  transition:transform .08s, background .2s, opacity .2s;
-}
+.nav{display:flex;gap:12px;margin-top:28px}
+.btn{font-family:inherit;font-weight:700;font-size:16px;border:none;border-radius:var(--raio);padding:15px 20px;cursor:pointer;transition:transform .08s, background .2s, opacity .2s}
 .btn:active{transform:scale(.98)}
-.btn-principal{
-  flex:1;
-  background:var(--cor-destaque);color:#fff;
-}
+.btn-principal{flex:1;background:var(--cor-destaque);color:#fff}
 .btn-principal:hover{background:var(--cor-destaque-2)}
 .btn-principal:disabled{opacity:.6;cursor:not-allowed}
-.btn-secundario{
-  background:transparent;
-  color:var(--cor-texto);
-  border:1.5px solid var(--cor-borda);
-  padding-left:24px;padding-right:24px;
-}
+.btn-secundario{background:transparent;color:var(--cor-texto);border:1.5px solid var(--cor-borda);padding-left:24px;padding-right:24px}
 .btn-grande{width:100%}
 
-/* Tela de obrigado */
-#thanks{text-align:center;padding-top:40px}
-#thanks .hero-icone{
-  width:72px;height:72px;margin:0 auto 24px;
-  border-radius:50%;
-  display:grid;place-items:center;
-  background:var(--cor-verde);color:#fff;font-size:34px;
-}
-#thanks h1{font-family:'Outfit',sans-serif;font-weight:700;font-size:28px;margin-bottom:12px;color:var(--cor-destaque)}
-#thanks p{color:var(--cor-suave);font-size:16px;margin-bottom:10px}
+#thanks{text-align:center;padding-top:36px}
+#thanks .hero-mark-ok{width:84px;height:84px;margin:0 auto 22px;border-radius:50%;display:grid;place-items:center;background:var(--cor-verde)}
+#thanks .hero-mark-ok svg{width:40px;height:40px;color:#fff}
+#thanks h1{font-weight:700;font-size:28px;margin-bottom:10px;color:var(--cor-destaque)}
+#thanks .thanks-lead{color:var(--cor-suave);font-size:16px;line-height:1.5;max-width:340px;margin:0 auto 22px}
+#thanks .declaracao{background:var(--cor-superficie);border:1px solid var(--cor-borda);border-radius:var(--raio);padding:18px;text-align:left;max-width:390px;margin:0 auto;font-size:13.5px;color:var(--cor-suave);line-height:1.6}
+#thanks .declaracao p{margin-bottom:10px}
+#thanks .declaracao p:last-child{margin-bottom:0}
+#thanks .declaracao strong{color:var(--cor-texto);font-weight:600}
 
-/* Rodapé institucional */
-.rodape{
-  text-align:center;
-  padding:18px 24px 26px;
-  font-size:11.5px;
-  color:var(--cor-suave);
-  line-height:1.7;
-  border-top:1px solid var(--cor-borda);
-}
+.rodape{text-align:center;padding:18px 24px 26px;font-size:11.5px;color:var(--cor-suave);line-height:1.7;border-top:1px solid var(--cor-borda)}
 
-/* Spinner do botão durante o envio */
-.spinner{
-  display:inline-block;width:18px;height:18px;
-  border:2.5px solid rgba(255,255,255,.4);
-  border-top-color:#fff;border-radius:50%;
-  animation:gira .7s linear infinite;
-  vertical-align:-3px;margin-right:8px;
-}
+.spinner{display:inline-block;width:18px;height:18px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:gira .7s linear infinite;vertical-align:-3px;margin-right:8px}
 @keyframes gira{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <!-- Barra de progresso -->
   <div class="progress" id="progress" style="display:none"><div class="progress-fill" id="progressFill"></div></div>
 
-  <!-- Cabeçalho / Logo -->
   <header class="topo">
-    <img src="https://cadastro.imoveismorali.com.br/logo.png" alt="Moralí" class="logo-img">
+    <img src="logo.png" alt="Moralí" class="logo-img">
   </header>
-
-  <!-- Régua de fases -->
-  <div class="stepper" id="stepper" style="display:none">
-    <div class="step-item" data-phase="0"><span class="step-dot"></span><span class="step-label">Endereço</span></div>
-    <div class="step-item" data-phase="1"><span class="step-dot"></span><span class="step-label">O imóvel</span></div>
-    <div class="step-item" data-phase="2"><span class="step-dot"></span><span class="step-label">Contato</span></div>
-  </div>
 
   <div class="conteudo">
 
@@ -413,52 +218,112 @@ select{
     <!-- ====== PONTO DE CONFIGURAÇÃO 2: TEXTO DE BOAS-VINDAS ========= -->
     <!-- ============================================================= -->
     <section class="screen active" id="welcome">
-      <div class="hero-icone">
-        <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M3 11.5 12 4l9 7.5"/>
-          <path d="M5 10v10h14V10"/>
-          <path d="M9.5 20v-6h5v6"/>
+      <span class="eyebrow">Análise de ficha · Locação</span>
+      <div class="hero-mark">
+        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 5h15.5L36 13.5V39a3 3 0 0 1-3 3H12a3 3 0 0 1-3-3V8a3 3 0 0 1 3-3z" fill="#ffffff" stroke="#023047" stroke-width="2.2" stroke-linejoin="round"/>
+          <path d="M27 5v9h9" fill="none" stroke="#023047" stroke-width="2.2" stroke-linejoin="round"/>
+          <line x1="16" y1="21" x2="29" y2="21" stroke="#023047" stroke-width="2.2" stroke-linecap="round"/>
+          <line x1="16" y1="27" x2="26" y2="27" stroke="#023047" stroke-width="2.2" stroke-linecap="round"/>
+          <circle cx="33.5" cy="33.5" r="8.5" fill="#70d262" stroke="#ffffff" stroke-width="2.5"/>
+          <path d="M30 33.5l2.3 2.3 4.3-4.7" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
-      <h1>Vamos cadastrar<br>o seu imóvel</h1>
-      <p>Preencha um cadastro rápido com as informações principais.
-         Leva poucos minutos.</p>
-      <button class="btn btn-principal btn-grande" style="margin-top:28px" onclick="iniciar()">Começar</button>
-      <p class="meta">Seus dados são tratados conforme a LGPD e usados apenas para o cadastro do imóvel.</p>
+      <h1>Vamos montar<br>sua proposta</h1>
+      <p>Reúna seus dados para a análise de ficha. Leva poucos minutos, suas informações ficam protegidas, e o envio não obriga ao fechamento do contrato.</p>
+      <ul class="garantias">
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 1.8"/></svg>
+          Cerca de 5 minutos
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+          Dados protegidos (LGPD)
+        </li>
+      </ul>
+      <button class="btn btn-principal btn-grande" style="margin-top:8px" onclick="iniciar()">Iniciar proposta</button>
     </section>
 
-    <!-- ===================== FORMULÁRIO ===================== -->
     <form id="form" novalidate>
 
-      <!-- ================= ETAPA 1: ONDE FICA O IMÓVEL ================= -->
-      <section class="step" id="stepImovel">
-        <h2 class="etapa-titulo">Onde fica o imóvel?</h2>
-        <p class="etapa-sub">Etapa 1 de 3</p>
+      <!-- ETAPA: INÍCIO (define se mostra o bloco "morador principal") -->
+      <section class="step" id="stepInicio">
+        <h2 class="etapa-titulo">Vamos começar</h2>
+        <p class="etapa-sub">Quem vai assinar o contrato</p>
+
+        <div class="explica">
+          Para alugar, a seguradora precisa aprovar um <b>CPF</b>.<br>
+          O contrato fica no nome dessa pessoa.
+        </div>
 
         <div class="campo">
-          <label>Endereço <span class="req">*</span></label>
-          <input type="text" name="endereco_logradouro" placeholder="Rua Cafelândia" required>
+          <div class="opcoes" data-radio-req>
+            <!-- Os value= abaixo NÃO podem mudar: o JS (sequencia/respEhMorador)
+                 e o Make leem "Sim..." / "Não..." no começo do texto. -->
+            <label class="opcao dupla"><input type="radio" name="quem_assina" value="Sim, vai ficar no meu nome">
+              <span class="txt"><b>Foi o meu CPF</b><small>O contrato fica no meu nome</small></span></label>
+            <label class="opcao dupla"><input type="radio" name="quem_assina" value="Não, vai ficar no nome de outra pessoa">
+              <span class="txt"><b>Foi o CPF de outra pessoa</b><small>Vou informar os dados dela na próxima tela</small></span></label>
+          </div>
+        </div>
+
+        <div class="erro-msg" data-erro>Selecione uma opção para continuar.</div>
+        <div class="nav">
+          <button type="button" class="btn btn-secundario" onclick="voltar()">Voltar</button>
+          <button type="button" class="btn btn-principal" onclick="avancar()">Avançar</button>
+        </div>
+      </section>
+
+      <!-- ETAPA CONDICIONAL (só "Não"): DADOS DO RESPONSÁVEL — a outra pessoa -->
+      <section class="step" id="stepLocatario">
+        <h2 class="etapa-titulo">Dados de quem assina</h2>
+        <p class="etapa-sub">A pessoa que teve o CPF aprovado.</p>
+
+        <div class="explica">
+          É esta pessoa que <b>assina o contrato</b>.<br>
+          Você preenche os dados dela.
+        </div>
+
+        <div class="campo">
+          <label>Nome completo dela <span class="req">*</span></label>
+          <input type="text" name="loc_nome" placeholder="Nome e sobrenome" data-cond-req>
         </div>
 
         <div class="linha">
           <div class="campo">
-            <label>Número <span class="req">*</span></label>
-            <input type="text" name="endereco_numero" placeholder="153" required>
-          </div>
-          <div class="campo">
-            <label>Complemento</label>
-            <input type="text" name="endereco_complemento" placeholder="apto 12">
+            <label>CPF dela <span class="req">*</span></label>
+            <input type="tel" name="loc_cpf" class="cpf-mask" placeholder="000.000.000-00" data-cond-req>
           </div>
         </div>
 
         <div class="linha">
           <div class="campo">
-            <label>Bairro <span class="req">*</span></label>
-            <input type="text" name="endereco_bairro" placeholder="Vila Celso" required>
+            <label>Data de nascimento <span class="req">*</span></label>
+            <input type="tel" name="loc_nascimento" class="data-mask" placeholder="00/00/0000" data-cond-req>
           </div>
           <div class="campo">
-            <label>Cidade <span class="req">*</span></label>
-            <input type="text" name="endereco_cidade" value="Catanduva" required>
+            <label>Estado civil dela <span class="req">*</span></label>
+            <select name="loc_estado_civil" data-cond-req>
+              <option value="">Selecione</option>
+              <option>Solteiro(a)</option><option>Casado(a)</option><option>União estável</option>
+              <option>Divorciado(a)</option><option>Separado(a)</option><option>Viúvo(a)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="campo">
+          <label>Onde ela mora hoje <span class="req">*</span></label>
+          <textarea name="loc_endereco" placeholder="Rua, número, bairro, cidade, CEP" data-cond-req></textarea>
+        </div>
+
+        <div class="linha">
+          <div class="campo">
+            <label>WhatsApp dela <span class="req">*</span></label>
+            <input type="tel" name="loc_whatsapp" class="tel-mask" placeholder="(00) 00000-0000" data-cond-req>
+          </div>
+          <div class="campo">
+            <label>E-mail</label>
+            <input type="email" name="loc_email" placeholder="exemplo@exemplo.com">
           </div>
         </div>
 
@@ -469,118 +334,173 @@ select{
         </div>
       </section>
 
-      <!-- ================= ETAPA 2: COMO É O IMÓVEL ================= -->
-      <section class="step" id="stepPerfilImovel">
-        <h2 class="etapa-titulo">Como é o imóvel?</h2>
-        <p class="etapa-sub">Etapa 2 de 3</p>
+      <!-- ETAPA: DADOS PROFISSIONAIS DO LOCATÁRIO -->
+      <section class="step" id="stepLocatarioProf">
+        <h2 class="etapa-titulo">Renda de quem assina</h2>
+        <p class="etapa-sub">A Moralí usa esta informação para avaliar a proposta.</p>
+
+        <div class="linha">
+          <div class="campo">
+            <label>Em que trabalha <span class="req">*</span></label>
+            <input type="text" name="loc_profissao" placeholder="Ex.: pedreiro, vendedora" required>
+          </div>
+          <div class="campo">
+            <label>Há quanto tempo <span class="req">*</span></label>
+            <input type="text" name="loc_tempo_servico" required>
+          </div>
+        </div>
 
         <div class="campo">
-          <label>Tipo do imóvel <span class="req">*</span></label>
-          <select name="tipo_imovel" id="tipoImovel" required>
+          <label>Quanto recebe por mês <span class="req">*</span></label>
+          <input type="text" name="loc_renda" placeholder="R$ 0,00" required>
+          <span class="dica">O valor que entra todo mês. Pode ser trabalho com carteira ou por conta própria.</span>
+        </div>
+
+        <div class="campo">
+          <label>Recebe algum outro dinheiro por mês?</label>
+          <input type="text" name="loc_outra_renda" placeholder="Ex.: pensão R$ 600">
+          <span class="dica">Pensão, aluguel, bico. Escreva o que é e quanto. Se não tiver, deixe vazio.</span>
+        </div>
+
+        <div class="erro-msg" data-erro>Preencha os campos obrigatórios para continuar.</div>
+        <div class="nav">
+          <button type="button" class="btn btn-secundario" onclick="voltar()">Voltar</button>
+          <button type="button" class="btn btn-principal" onclick="avancar()">Avançar</button>
+        </div>
+      </section>
+
+      <!-- ETAPA: CÔNJUGE — só aparece se o responsável for casado(a) / união estável -->
+      <section class="step" id="stepConjugeLocatario">
+        <h2 class="etapa-titulo">Marido ou esposa</h2>
+        <p class="etapa-sub">De quem vai assinar o contrato.</p>
+
+        <div class="explica">
+          Você marcou <b>casado(a)</b> ou <b>união estável</b>.<br>
+          A seguradora analisa as duas pessoas do casal.
+        </div>
+
+        <div class="campo">
+          <label>Nome completo <span class="req">*</span></label>
+          <input type="text" name="conj_loc_nome" placeholder="Nome e sobrenome" data-cond-req>
+        </div>
+
+        <div class="linha">
+          <div class="campo">
+            <label>CPF <span class="req">*</span></label>
+            <input type="tel" name="conj_loc_cpf" class="cpf-mask" placeholder="000.000.000-00" data-cond-req>
+          </div>
+        </div>
+
+        <div class="linha">
+          <div class="campo">
+            <label>Data de nascimento <span class="req">*</span></label>
+            <input type="tel" name="conj_loc_nascimento" class="data-mask" placeholder="00/00/0000" data-cond-req>
+          </div>
+          <div class="campo">
+            <label>WhatsApp <span class="req">*</span></label>
+            <input type="tel" name="conj_loc_whatsapp" class="tel-mask" placeholder="(00) 00000-0000" data-cond-req>
+          </div>
+        </div>
+
+        <div class="erro-msg" data-erro>Preencha os campos obrigatórios para continuar.</div>
+        <div class="nav">
+          <button type="button" class="btn btn-secundario" onclick="voltar()">Voltar</button>
+          <button type="button" class="btn btn-principal" onclick="avancar()">Avançar</button>
+        </div>
+      </section>
+
+      <!-- ETAPA: SEUS DADOS (morador que preenche) — sempre -->
+      <section class="step" id="stepMorador">
+        <h2 class="etapa-titulo">Agora os seus dados</h2>
+        <p class="etapa-sub">Você, que vai morar no imóvel.</p>
+
+        <div class="explica">
+          A Moralí precisa saber <b>quem vai morar</b> na casa.
+        </div>
+
+        <div class="campo">
+          <label>Seu nome completo <span class="req">*</span></label>
+          <input type="text" name="mor_nome" placeholder="Nome e sobrenome" required>
+        </div>
+
+        <div class="linha">
+          <div class="campo">
+            <label>Seu CPF <span class="req">*</span></label>
+            <input type="tel" name="mor_cpf" class="cpf-mask" placeholder="000.000.000-00" required>
+          </div>
+        </div>
+
+        <div class="linha">
+          <div class="campo">
+            <label>Data de nascimento <span class="req">*</span></label>
+            <input type="tel" name="mor_nascimento" class="data-mask" placeholder="00/00/0000" required>
+          </div>
+          <div class="campo">
+            <label>Seu estado civil <span class="req">*</span></label>
+            <select name="mor_estado_civil" required>
+              <option value="">Selecione</option>
+              <option>Solteiro(a)</option><option>Casado(a)</option><option>União estável</option>
+              <option>Divorciado(a)</option><option>Separado(a)</option><option>Viúvo(a)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="campo">
+          <label>Onde você mora hoje <span class="req">*</span></label>
+          <textarea name="mor_endereco" placeholder="Rua, número, bairro, cidade, CEP" required></textarea>
+        </div>
+
+        <div class="linha">
+          <div class="campo">
+            <label>Seu WhatsApp <span class="req">*</span></label>
+            <input type="tel" name="mor_whatsapp" class="tel-mask" placeholder="(00) 00000-0000" required>
+          </div>
+          <div class="campo">
+            <label>E-mail</label>
+            <input type="email" name="mor_email" placeholder="exemplo@exemplo.com">
+          </div>
+        </div>
+
+        <div class="erro-msg" data-erro>Preencha os campos obrigatórios para continuar.</div>
+        <div class="nav">
+          <button type="button" class="btn btn-secundario" onclick="voltar()">Voltar</button>
+          <button type="button" class="btn btn-principal" onclick="avancar()">Avançar</button>
+        </div>
+      </section>
+
+      <!-- ETAPA: PERFIL DE QUEM VAI MORAR (sempre) -->
+      <section class="step" id="stepPerfil">
+        <h2 class="etapa-titulo">Sobre você</h2>
+        <p class="etapa-sub">Três perguntas rápidas.</p>
+
+        <div class="campo">
+          <label>Onde você mora hoje? <span class="req">*</span></label>
+          <!-- value= mantido igual ao que já chega no Make; muda só o texto na tela -->
+          <select name="perfil_reside" required>
             <option value="">Selecione</option>
-            <option>Casa</option>
-            <option>Apartamento</option>
-            <option>Kitnet</option>
-            <option>Sobrado</option>
-            <option>Chácara</option>
-            <option>Sala comercial</option>
-            <option>Salão comercial</option>
-            <option>Barracão</option>
-            <option>Terreno</option>
+            <option value="Sim, alugado">Em casa alugada</option>
+            <option value="Sim, próprio">Em casa própria</option>
+            <option value="Sim, de familiares">Na casa de familiares</option>
+            <option value="Não">Outra situação</option>
           </select>
         </div>
 
-        <!-- Contadores. O valor vai nos hidden abaixo, com os names de sempre. -->
-        <div class="contadores" id="contadores">
-          <div class="contador" data-campo="dormitorios" data-so="residencial" data-padrao="1">
-            <span>Dormitórios</span>
-            <span class="ctrl">
-              <button type="button" data-passo="-1" aria-label="menos um dormitório">−</button>
-              <b>1</b>
-              <button type="button" data-passo="1" aria-label="mais um dormitório">+</button>
-            </span>
-          </div>
-          <div class="contador" data-campo="banheiros" data-so="comodo" data-padrao="1">
-            <span>Banheiros</span>
-            <span class="ctrl">
-              <button type="button" data-passo="-1" aria-label="menos um banheiro">−</button>
-              <b>1</b>
-              <button type="button" data-passo="1" aria-label="mais um banheiro">+</button>
-            </span>
-          </div>
-          <div class="contador" data-campo="suites" data-so="residencial" data-padrao="0">
-            <span>Suítes</span>
-            <span class="ctrl">
-              <button type="button" data-passo="-1" aria-label="menos uma suíte">−</button>
-              <b>0</b>
-              <button type="button" data-passo="1" aria-label="mais uma suíte">+</button>
-            </span>
-          </div>
-          <div class="contador" data-campo="garagem" data-so="comodo" data-padrao="1">
-            <span>Vagas de garagem</span>
-            <span class="ctrl">
-              <button type="button" data-passo="-1" aria-label="menos uma vaga">−</button>
-              <b>1</b>
-              <button type="button" data-passo="1" aria-label="mais uma vaga">+</button>
-            </span>
-          </div>
+        <div class="campo">
+          <label>Tem animal de estimação? <span class="req">*</span></label>
+          <select name="perfil_animal" required>
+            <option value="">Selecione</option>
+            <option value="Não">Não tenho</option>
+            <option value="Sim, 1">Sim, 1 animal</option>
+            <option value="Sim, 2">Sim, 2 animais</option>
+            <option value="Sim, 3 ou mais">Sim, 3 ou mais</option>
+          </select>
         </div>
-        <input type="hidden" name="dormitorios" value="1">
-        <input type="hidden" name="banheiros"   value="1">
-        <input type="hidden" name="suites"      value="0">
-        <input type="hidden" name="garagem"     value="1">
 
         <div class="campo">
-          <label>Quanto você quer de aluguel? <span class="req">*</span></label>
-          <input type="text" name="valor_aluguel" placeholder="R$ 0,00" required>
-          <span class="dica">Um valor aproximado já serve. A Moralí avalia e conversa com você.</span>
+          <label>Seu Instagram ou Facebook</label>
+          <input type="text" name="perfil_social" placeholder="@seu_usuario">
+          <span class="dica">Só o nome de usuário. Não é obrigatório.</span>
         </div>
-
-        <details class="opcional">
-          <summary>Quer detalhar mais? (opcional)</summary>
-          <span class="dica">Se você não souber agora, a Moralí confere na vistoria.</span>
-
-          <!-- Só aparece para Apartamento e Kitnet. Casa não tem andar nem elevador. -->
-          <div id="blocoApto" style="display:none">
-            <div class="linha">
-              <div class="campo">
-                <label>Qual andar?</label>
-                <input type="text" name="andar" placeholder="ex.: 3º">
-              </div>
-              <div class="campo">
-                <label>Tem elevador?</label>
-                <input type="text" name="elevador" placeholder="quantos">
-              </div>
-            </div>
-
-            <div class="campo">
-              <label>Valor mensal do condomínio (R$)</label>
-              <input type="text" name="valor_condominio" placeholder="R$ 0,00">
-            </div>
-
-            <div class="campo">
-              <label>O que está incluso no condomínio?</label>
-              <div class="radios">
-                <label class="check"><input type="checkbox" name="incluso" value="Água"> Água</label>
-                <label class="check"><input type="checkbox" name="incluso" value="Gás encanado"> Gás encanado</label>
-                <label class="check"><input type="checkbox" name="incluso" value="Portaria 24h"> Portaria 24h</label>
-                <label class="check"><input type="checkbox" name="incluso" value="Limpeza/manutenção"> Limpeza/manutenção</label>
-                <label class="check"><input type="checkbox" name="incluso" value="Coleta de lixo"> Coleta de lixo</label>
-                <label class="check"><input type="checkbox" name="incluso" value="Sistema de segurança"> Sistema de segurança</label>
-              </div>
-            </div>
-
-            <div class="campo">
-              <label>Possui área de lazer? Como é?</label>
-              <textarea name="area_lazer" placeholder="piscina, churrasqueira, salão de festas..."></textarea>
-            </div>
-          </div>
-
-          <div class="campo">
-            <label>Mais alguma coisa que a gente precisa saber?</label>
-            <textarea name="observacao"></textarea>
-          </div>
-        </details>
 
         <div class="erro-msg" data-erro>Preencha os campos obrigatórios para continuar.</div>
         <div class="nav">
@@ -589,166 +509,187 @@ select{
         </div>
       </section>
 
-      <!-- ================= ETAPA 3: CONTATO ================= -->
-      <section class="step" id="stepContato">
-        <h2 class="etapa-titulo">Como falamos com você?</h2>
-        <p class="etapa-sub">Etapa 3 de 3 — as últimas perguntas.</p>
+      <!-- ETAPA: DADOS COMPLEMENTARES -->
+      <section class="step" id="stepComplementares">
+        <h2 class="etapa-titulo">Últimos detalhes</h2>
+        <p class="etapa-sub">Faltam duas perguntas.</p>
 
         <div class="campo">
-          <label>Seu nome <span class="req">*</span></label>
-          <input type="text" name="pf_nome" placeholder="Nome e sobrenome" required>
-        </div>
-
-        <div class="campo">
-          <label>Seu WhatsApp <span class="req">*</span></label>
-          <input type="tel" name="pf_whatsapp" class="mask-tel" placeholder="(00) 00000-0000" required>
-        </div>
-
-        <div class="campo">
-          <label>O imóvel está em nome de <span class="req">*</span></label>
-          <div class="radios duas solto">
-            <label class="check"><input type="radio" name="proprietario_tipo" value="Pessoa Física (CPF)"> CPF</label>
-            <label class="check"><input type="radio" name="proprietario_tipo" value="Pessoa Jurídica (CNPJ)"> CNPJ</label>
-          </div>
-        </div>
-
-        <!-- Só aparece depois da escolha. Rótulo, máscara e name acompanham. -->
-        <div class="campo" id="campoDocWrap" style="display:none">
-          <label id="rotuloDocNum">CPF</label>
-          <input type="text" id="campoDocNum" name="pf_cpf" class="mask-cpf" placeholder="000.000.000-00">
-          <span class="dica">Não é obrigatório. Se preferir, informe depois.</span>
-        </div>
-
-        <div class="campo">
-          <label>Você declara os valores recebidos de aluguel no seu Imposto de Renda (IRPF ou IRPJ)?</label>
-          <div class="radios duas solto">
-            <label class="check"><input type="radio" name="declara_ir" value="Sim"> Sim</label>
-            <label class="check"><input type="radio" name="declara_ir" value="Não"> Não</label>
+          <label>Em que dia você prefere pagar o aluguel? <span class="req">*</span></label>
+          <div class="opcoes duas" data-radio-req>
+            <label class="opcao"><input type="radio" name="data_pagamento" value="Dia 05"> Dia 05</label>
+            <label class="opcao"><input type="radio" name="data_pagamento" value="Dia 10"> Dia 10</label>
           </div>
         </div>
 
         <div class="campo">
-          <label>Deseja impor alguma restrição ou exigência ao uso do imóvel durante a locação?</label>
-          <div class="radios duas solto">
-            <label class="check"><input type="radio" name="tem_restricao" value="Sim"> Sim</label>
-            <label class="check"><input type="radio" name="tem_restricao" value="Não"> Não</label>
+          <label>Quem vai morar na casa? <span class="req">*</span></label>
+          <textarea name="qtd_pessoas" placeholder="Maria Silva, 34 anos&#10;João Silva, 8 anos" required></textarea>
+          <span class="dica">Escreva o nome e a idade de cada pessoa, uma por linha. Conte você também.</span>
+        </div>
+
+        <div class="erro-msg" data-erro>Preencha os campos obrigatórios para continuar.</div>
+        <div class="nav">
+          <button type="button" class="btn btn-secundario" onclick="voltar()">Voltar</button>
+          <button type="button" class="btn btn-principal" onclick="avancar()">Avançar</button>
+        </div>
+      </section>
+
+      <!-- ETAPA: REFERÊNCIAS PESSOAIS -->
+      <section class="step" id="stepReferencias">
+        <h2 class="etapa-titulo">Duas pessoas que conhecem você</h2>
+        <p class="etapa-sub">A Moralí pode ligar para elas.</p>
+
+        <div class="explica atencao">
+          <b>Não pode ser parente.</b><br>
+          Nada de pai, mãe, irmão, tio ou avó. Pode ser amigo, vizinho ou colega de trabalho.
+        </div>
+
+        <div class="campo">
+          <label>Nome da 1ª pessoa <span class="req">*</span></label>
+          <input type="text" name="ref1_nome" required>
+        </div>
+        <div class="linha">
+          <div class="campo">
+            <label>Como você conhece <span class="req">*</span></label>
+            <input type="text" name="ref1_relacao" placeholder="amigo, vizinho" required>
+          </div>
+          <div class="campo">
+            <label>WhatsApp dela <span class="req">*</span></label>
+            <input type="tel" name="ref1_whatsapp" class="tel-mask" placeholder="(00) 00000-0000" required>
           </div>
         </div>
 
-        <div class="campo" id="campoRestricao" style="display:none">
-          <label>Quais restrições ou exigências?</label>
-          <textarea name="restricao_qual" placeholder="Ex.: não aceita animais; máximo de 4 moradores; proibido reformar sem autorização."></textarea>
+        <hr class="divisor">
+
+        <div class="campo">
+          <label>Nome da 2ª pessoa <span class="req">*</span></label>
+          <input type="text" name="ref2_nome" required>
+        </div>
+        <div class="linha">
+          <div class="campo">
+            <label>Como você conhece <span class="req">*</span></label>
+            <input type="text" name="ref2_relacao" placeholder="amigo, vizinho" required>
+          </div>
+          <div class="campo">
+            <label>WhatsApp dela <span class="req">*</span></label>
+            <input type="tel" name="ref2_whatsapp" class="tel-mask" placeholder="(00) 00000-0000" required>
+          </div>
         </div>
 
-        <div class="campo bloco-doc">
-          <label>Documento com foto (RG ou CNH)</label>
-          <span class="dica" style="margin-top:0;margin-bottom:8px">Foto ou PDF, para confirmar sua identidade. Não é obrigatório — pode enviar depois.</span>
-          <label class="dropzone" for="documento">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-              <polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
-            </svg>
-            <p><span class="destaque">Toque para escolher</span> ou arraste o arquivo aqui.</p>
-            <input type="file" id="documento" accept="image/*,application/pdf">
+        <div class="erro-msg" data-erro>Preencha os campos obrigatórios para continuar.</div>
+        <div class="nav">
+          <button type="button" class="btn btn-secundario" onclick="voltar()">Voltar</button>
+          <button type="button" class="btn btn-principal" onclick="avancar()">Avançar</button>
+        </div>
+      </section>
+
+      <!-- ETAPA: ANEXAR DOCUMENTOS -->
+      <section class="step" id="stepDocumentos">
+        <h2 class="etapa-titulo">Fotos dos documentos</h2>
+        <p class="etapa-sub">Da pessoa que assina o contrato.</p>
+
+        <div class="explica">
+          Pode ser <b>foto tirada pelo celular</b>. Só precisa dar para ler.<br>
+          Não tem agora? Toque em Avançar e mande depois pelo WhatsApp.
+        </div>
+
+        <div class="upload">
+          <label>RG ou CNH — frente e verso</label>
+          <label class="dropzone" id="dz_rg">
+            <span class="conteudo-dz">
+              <span class="nuvem">⬆️</span>
+              <span class="acao">Escolher foto</span>
+              <span class="sub">Toque aqui para tirar ou buscar a foto</span>
+            </span>
+            <input type="file" accept="image/*,application/pdf" data-doc="doc_rg_cnh">
           </label>
-          <div class="doc-sel" id="docSelecionado">
-            <span class="nome" id="docNome"></span>
-            <button type="button" id="docRemover" title="Remover">&times;</button>
-          </div>
         </div>
 
-        <details class="opcional">
-          <summary>E-mail, se quiser receber por escrito</summary>
-          <div class="campo">
-            <label>E-mail</label>
-            <input type="email" name="pf_email" placeholder="exemplo@exemplo.com">
-            <span class="dica">Opcional. A conversa acontece pelo WhatsApp.</span>
-          </div>
-        </details>
+        <div class="upload">
+          <label>Comprovante de renda</label>
+          <label class="dropzone" id="dz_renda">
+            <span class="conteudo-dz">
+              <span class="nuvem">⬆️</span>
+              <span class="acao">Escolher foto</span>
+              <span class="sub">Holerite, extrato do banco ou declaração</span>
+            </span>
+            <input type="file" accept="image/*,application/pdf" data-doc="doc_renda">
+          </label>
+        </div>
 
-        <!-- ===== O que a Moralí pediria depois, para quem quiser adiantar ===== -->
-        <details class="opcional">
-          <summary>Quer adiantar o cadastro completo? (opcional)</summary>
-          <span class="dica">Nada aqui é obrigatório. Se preferir, a Moralí pede depois pelo WhatsApp.</span>
+        <div class="upload">
+          <label>Comprovante de endereço</label>
+          <label class="dropzone" id="dz_end">
+            <span class="conteudo-dz">
+              <span class="nuvem">⬆️</span>
+              <span class="acao">Escolher foto</span>
+              <span class="sub">Conta de luz, água ou telefone</span>
+            </span>
+            <input type="file" accept="image/*,application/pdf" data-doc="doc_endereco">
+          </label>
+        </div>
 
-          <div class="campo">
-            <label>Voltagem da energia elétrica</label>
-            <select name="voltagem">
-              <option value="">Não sei / prefiro não informar</option>
-              <option>110v</option>
-              <option>220v</option>
-              <option>110v e 220v</option>
-            </select>
-          </div>
+        
 
-          <div class="campo">
-            <label>Quem será responsável pelo pagamento do IPTU durante a locação?</label>
-            <div class="radios duas solto">
-              <label class="check"><input type="radio" name="iptu_responsavel" value="Proprietário"> Proprietário</label>
-              <label class="check"><input type="radio" name="iptu_responsavel" value="Inquilino"> Inquilino</label>
-            </div>
-          </div>
+        <div class="erro-msg" data-erro></div>
+        <div class="nav">
+          <button type="button" class="btn btn-secundario" onclick="voltar()">Voltar</button>
+          <button type="button" class="btn btn-principal" onclick="avancar()">Avançar</button>
+        </div>
+      </section>
 
-          <div class="campo">
-            <label>Prazo do contrato: 36 meses, com permanência mínima de 12 meses</label>
-            <!-- Empilhado de propósito: "Não concordo, quero conversar" não
-                 cabe em meia largura no celular. -->
-            <div class="radios solto">
-              <label class="check"><input type="radio" name="prazo_aceite" value="Concordo"> Concordo</label>
-              <label class="check"><input type="radio" name="prazo_aceite" value="Não concordo, quero conversar"> Não concordo, quero conversar</label>
-            </div>
-          </div>
-
-          <div class="campo">
-            <label>Chave PIX para o repasse do aluguel</label>
-            <input type="text" name="banco_pix" placeholder="CPF, celular, e-mail ou chave aleatória">
-            <span class="dica">É para onde a Moralí deposita o seu aluguel todo mês.</span>
-          </div>
-        </details>
+      <!-- ETAPA: OBSERVAÇÃO + ACEITE LGPD + ENVIO -->
+      <section class="step" id="stepObs">
+        <h2 class="etapa-titulo">Quer nos contar mais alguma coisa?</h2>
+        <p class="etapa-sub">Esta parte não é obrigatória.</p>
 
         <div class="campo">
-          <label class="check check-aceite">
-            <input type="checkbox" id="aceiteTermos" name="aceite_lgpd" value="Aceito">
-            <span>Li e concordo com o uso dos meus dados, conforme o
+          <label>Escreva aqui, se quiser</label>
+          <textarea name="observacao" placeholder="Ex.: preciso mudar até o fim do mês"></textarea>
+        </div>
+
+        <!-- Aceite LGPD: obrigatório para enviar -->
+        <div class="campo">
+          <label class="opcao consent">
+            <input type="checkbox" name="aceite_lgpd" id="aceiteLgpd" value="Aceito">
+            <span>Declaro, sob as penas da lei, que os dados informados são verdadeiros e que tenho autorização das pessoas indicadas como referências e responsável; e concordo com o uso dos meus dados conforme o
               <a href="termo.html" target="_blank" rel="noopener">Termo de Uso e Privacidade (LGPD)</a>.</span>
           </label>
         </div>
 
-        <div class="erro-msg" data-erro>Preencha os campos obrigatórios e aceite o termo para enviar.</div>
+        <div class="erro-msg" data-erro></div>
         <div class="nav">
           <button type="button" class="btn btn-secundario" onclick="voltar()">Voltar</button>
-          <button type="button" class="btn btn-principal" id="btnEnviar" onclick="enviar()">Enviar cadastro</button>
+          <button type="button" class="btn btn-principal" id="btnEnviar" onclick="enviar()">Enviar proposta</button>
         </div>
       </section>
+
     </form>
 
     <!-- ============================================================= -->
     <!-- ====== PONTO DE CONFIGURAÇÃO 3: TEXTO DE AGRADECIMENTO ======= -->
     <!-- ============================================================= -->
-    <!-- ARMADILHA DE ROBÔ. Fica fora da tela e sem rótulo visível:
-         gente nunca preenche, robô que varre campos preenche sempre.
-         `tabindex=-1` e `autocomplete=off` para não pegar quem navega
-         por teclado nem o preenchimento automático do navegador. -->
+    <!-- ARMADILHA DE ROBÔ: fora da tela, sem rótulo. Gente não preenche. -->
     <input type="text" id="confirme-email" name="confirme-email" tabindex="-1"
            autocomplete="off" aria-hidden="true"
            style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
 
     <section class="screen" id="thanks">
-      <div class="hero-icone">
-        <svg viewBox="0 0 24 24" width="38" height="38" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M5 13l4 4L19 7"/>
-        </svg>
+      <div class="hero-mark-ok">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
       </div>
-      <h1>Cadastro enviado!</h1>
-      <p>Recebemos as informações do seu imóvel e em breve entraremos em contato pelo WhatsApp.</p>
-      <p><a href="https://wa.me/5517996808900" style="color:inherit">
-        Falar com a Moralí no WhatsApp</a></p>
-      <p>Obrigado por confiar na Moralí para cuidar do seu patrimônio.</p>
+      <h1>Recebemos sua ficha!</h1>
+      <p class="thanks-lead">Entraremos em contato pelo WhatsApp.</p>
+      <div class="aviso-forte">
+        <b>Atenção: isto ainda não é o contrato de aluguel.</b>
+        <p>A ficha vai para análise. A chave só é entregue depois da análise aprovada e do contrato assinado.</p>
+        <p class="legal">O mero preenchimento e entrega da proposta <strong>não obriga ao fechamento do contrato</strong>, que somente ocorrerá se houver aprovação da análise de ficha.</p>
+      </div>
     </section>
 
   </div>
 
-  <!-- Rodapé institucional -->
   <footer class="rodape">
     MORALÍ GESTÃO IMOBILIÁRIA LTDA<br>
     CNPJ 07.697.516/0001-86 · CRECI 54547-J
@@ -759,24 +700,23 @@ select{
 <script>
 /* =====================================================================
    ====== PONTO DE CONFIGURAÇÃO 4: LINK DO MAKE (WEBHOOK) ==============
+   ATENÇÃO: crie um cenário NOVO no Make para o Locatário e cole o
+   webhook dele aqui. NÃO use o webhook do Locador — os campos são
+   diferentes e vão bagunçar o cenário antigo.
+   (Você vai preencher isso na ETAPA 3 do nosso plano.)
    ===================================================================== */
 /* =====================================================================
    ====== CONFIGURAÇÃO — v2, agosto/2026 =========================
-   O webhook do Make saiu. Ele estava ESCRITO NESTA PÁGINA e não pedia
-   autenticação nenhuma: quem abrisse o código-fonte copiava a URL e
-   injetava ficha falsa, que disparava e-mail em nome da Moralí para os
-   parceiros.
-   Agora a página fala com o banco por duas portas que só sabem fazer
-   uma coisa cada (ficha_iniciar e ficha_enviar). A chave abaixo é
-   PÚBLICA de propósito — é a mesma que o CRM usa no navegador, e ela
-   sozinha não abre tabela nenhuma.
+   O webhook do Make saiu: estava escrito nesta página, sem autenticação
+   nenhuma. A página agora fala com o banco por duas portas que só sabem
+   fazer uma coisa cada. A chave abaixo é PÚBLICA de propósito — é a
+   mesma do CRM, e sozinha não abre tabela nenhuma.
    ===================================================================== */
 const SUPABASE_URL = "https://gcoikoeiuwaygjjwedjp.supabase.co";
 const SUPABASE_KEY = "sb_publishable_ChTppJgR6vesRWLG_9rQ5A_HZgNv6Kn";
-const TIPO_FICHA   = "Proprietário";
-const BUCKET       = "documentos-proprietarios";
+const TIPO_FICHA   = "Locatário";
+const BUCKET       = "documentos-locatarios";
 
-/** quando a página abriu — serve para saber se quem enviou é gente */
 const ABERTO_EM = Date.now();
 
 async function rpc(funcao, args){
@@ -801,85 +741,55 @@ const progress     = document.getElementById('progress');
 const progressFill = document.getElementById('progressFill');
 const welcome      = document.getElementById('welcome');
 const thanks       = document.getElementById('thanks');
-const stepper      = document.getElementById('stepper');
 
-// A qual fase da régua cada etapa pertence
-const FASE = {
-  stepImovel:0,
-  stepPerfilImovel:1,
-  stepContato:2
-};
+// Guarda os documentos anexados (já processados em memória)
+const arquivos = {};
 
-// Atualiza a régua de fases conforme a etapa atual
-function atualizarRegua(stepId){
-  const fase = FASE[stepId] || 0;
-  document.querySelectorAll('.step-item').forEach(el=>{
-    const p = parseInt(el.dataset.phase, 10);
-    el.classList.toggle('done',   p < fase);
-    el.classList.toggle('active', p === fase);
-  });
+let indice = 0;
+
+// Monta a ordem das etapas.
+// - Quem ASSINA vem primeiro e em bloco: identidade, renda e cônjuge.
+//   Assim a tela seguinte ao "Foi o CPF de outra pessoa" é a dela, como o
+//   texto da opção promete. Antes "Seus dados" vinha no meio e confundia.
+// - "Seus dados" (quem vai morar) aparece SEMPRE: no "Sim" é a mesma pessoa
+//   e abre o bloco; no "Não" vem depois de fechado o bloco de quem assina.
+function sequencia(){
+  const dif = document.querySelector('input[name=quem_assina]:checked');
+  const ehNao = dif && dif.value.indexOf('Não') === 0;
+  const base = ['stepInicio'];
+  if(ehNao){
+    base.push('stepLocatario');             // identidade de quem assina (outra pessoa)
+  }else{
+    base.push('stepMorador');               // assina e mora: um bloco só
+  }
+  base.push('stepLocatarioProf');           // renda de quem assina
+  // A tela do cônjuge só aparece se o responsável for casado(a) ou união estável.
+  if(precisaConjuge(ehNao)){
+    base.push('stepConjugeLocatario');
+  }
+  if(ehNao){
+    base.push('stepMorador');               // só agora os dados de quem vai morar
+  }
+  base.push('stepPerfil','stepComplementares','stepReferencias','stepDocumentos','stepObs');
+  return base;
 }
 
-/* ===== O que cada tipo de imóvel pergunta =====
-   Sala comercial fica em prédio: tem andar, elevador e condomínio.
-   Terreno não tem cômodo nenhum. Comercial não tem dormitório nem suíte. */
-const TIPOS_APTO        = ['Apartamento','Kitnet','Sala comercial'];
-const TIPOS_RESIDENCIAIS = ['Casa','Apartamento','Kitnet','Sobrado','Chácara'];
-const TIPOS_SEM_COMODO   = ['Terreno'];
-
-/* Esconde o que não faz sentido e ZERA o valor escondido — senão quem
-   escolhe Apartamento, conta 3 dormitórios e depois troca para Terreno
-   manda um terreno com 3 quartos. */
-document.addEventListener('DOMContentLoaded', () => {
-  const tipo  = document.getElementById('tipoImovel');
-  const bloco = document.getElementById('blocoApto');
-  if(!tipo) return;
-
-  function ajustar(){
-    const t = tipo.value;
-    const residencial = TIPOS_RESIDENCIAIS.includes(t);
-    const temComodo   = t !== '' && !TIPOS_SEM_COMODO.includes(t);
-
-    // andar / elevador / condomínio / área de lazer
-    if(bloco){
-      const mostraApto = TIPOS_APTO.includes(t);
-      bloco.style.display = mostraApto ? '' : 'none';
-      if(!mostraApto){
-        bloco.querySelectorAll('input[type=text], textarea').forEach(c=> c.value = '');
-        bloco.querySelectorAll('input[type=checkbox]').forEach(c=> c.checked = false);
-      }
-    }
-
-    // contadores
-    document.querySelectorAll('.contador').forEach(linha=>{
-      const grupo  = linha.dataset.so;                 // "residencial" ou "comodo"
-      const mostra = grupo === 'residencial' ? residencial : temComodo;
-      const alvo   = document.querySelector(`input[type=hidden][name="${linha.dataset.campo}"]`);
-      linha.style.display = mostra ? '' : 'none';
-      if(!alvo) return;
-      if(mostra){
-        // volta ao padrão se a pessoa ainda não mexeu neste contador —
-        // senão quem passa por Terreno e escolhe Casa recebe 0 dormitórios
-        if(!linha.dataset.tocado) alvo.value = linha.dataset.padrao;
-      }else{
-        alvo.value = '0';
-      }
-      linha.querySelector('b').textContent = alvo.value;
-      const menos = linha.querySelector('button[data-passo="-1"]');
-      if(menos) menos.disabled = Number(alvo.value) <= 0;
-    });
-  }
-
-  tipo.addEventListener('change', ajustar);
-  ajustar();
-});
-
-let indice = 0; // posição atual dentro da sequência de etapas
-
-// A ordem agora é fixa: o imóvel primeiro, o dono por último.
-// Quem preenche fala do que veio falar; o contato fica para o fim.
-function sequencia(){
-  return ['stepImovel','stepPerfilImovel','stepContato'];
+// Decide se a etapa do cônjuge deve aparecer, olhando o estado civil CERTO:
+// - "Não" (outra pessoa assina): estado civil do responsável (loc_estado_civil)
+// - "Sim" (a própria pessoa assina): estado civil do morador (mor_estado_civil)
+function precisaConjuge(ehNao){
+  const campo = ehNao
+    ? document.querySelector('select[name=loc_estado_civil]')
+    : document.querySelector('select[name=mor_estado_civil]');
+  const valor = campo ? campo.value : '';
+  // 24/08/2026 — comparação sem depender de maiúscula/acento. A opção
+  // dizia "União Estável" com E grande, e o CRM só aceita "União
+  // estável" (é o CHECK contatos_estado_civil_check); a opção foi
+  // corrigida acima, mas comparar assim impede que a etapa do cônjuge
+  // suma de novo se um dia alguém reescrever o rótulo.
+  const chave = valor.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                     .toLowerCase().replace(/[^a-z]/g, '');
+  return chave === 'casadoa' || chave === 'uniaoestavel';
 }
 
 function mostrarEtapa(i){
@@ -889,12 +799,8 @@ function mostrarEtapa(i){
   welcome.classList.remove('active');
   thanks.classList.remove('active');
   document.getElementById(seq[i]).classList.add('active');
-  // progresso
   progress.style.display = 'block';
   progressFill.style.width = ((i+1)/seq.length*100) + '%';
-  // régua de fases
-  stepper.style.display = 'flex';
-  atualizarRegua(seq[i]);
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -904,207 +810,174 @@ function avancar(){
   const seq = sequencia();
   const etapaEl = document.getElementById(seq[indice]);
   if(!validar(etapaEl)) return;
-  if(indice < seq.length-1){ mostrarEtapa(indice+1); }
+  // a sequência pode mudar após a 1ª pergunta; recalcula
+  const novaSeq = sequencia();
+  if(indice < novaSeq.length-1){ mostrarEtapa(indice+1); }
 }
 
 function voltar(){
   if(indice === 0){
-    // volta pra tela de boas-vindas
     document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
     welcome.classList.add('active');
     progress.style.display = 'none';
-    stepper.style.display = 'none';
     window.scrollTo({top:0,behavior:'smooth'});
   } else {
     mostrarEtapa(indice-1);
   }
 }
 
-// Validação: confere os campos obrigatórios da etapa visível
+// Validação da etapa visível
 function validar(etapaEl){
   let ok = true;
   const erroBox = etapaEl.querySelector('[data-erro]');
 
-  // campos required normais
   etapaEl.querySelectorAll('[required]').forEach(c=>{
     marcar(c, !!c.value.trim());
     if(!c.value.trim()) ok = false;
   });
-  // campos obrigatórios só quando a etapa aparece (ex.: andar)
   etapaEl.querySelectorAll('[data-cond-req]').forEach(c=>{
     marcar(c, !!c.value.trim());
     if(!c.value.trim()) ok = false;
   });
-  // opção CPF/CNPJ obrigatória. Os outros Sim/Não da etapa são opcionais.
-  if(etapaEl.querySelector('input[name=proprietario_tipo]')){
-    if(!etapaEl.querySelector('input[name=proprietario_tipo]:checked')) ok = false;
-  }
-  // e-mail precisa ter formato válido
-  const email = etapaEl.querySelector('input[type=email]');
+  const email = etapaEl.querySelector('input[type=email][required], input[type=email][data-cond-req]');
   if(email && email.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)){
     marcar(email,false); ok=false;
   }
-  // consentimento LGPD obrigatório (etapa final)
-  const consent = etapaEl.querySelector('#aceiteTermos');
-  if(consent && !consent.checked) ok = false;
+  // grupos de radio obrigatórios (sempre)
+  etapaEl.querySelectorAll('[data-radio-req]').forEach(g=>{
+    if(!g.querySelector('input:checked')) ok = false;
+  });
 
   if(erroBox) erroBox.classList.toggle('show', !ok);
   return ok;
 }
 
-function marcar(campo, valido){
-  campo.classList.toggle('invalido', !valido);
-}
+function marcar(campo, valido){ campo.classList.toggle('invalido', !valido); }
 
-/* ===== Contadores (dormitórios, banheiros, suítes, vagas) =====
-   Cada + / − escreve no <input type="hidden"> de mesmo name, então o
-   FormData continua saindo igual ao dos <select> de antes. */
-document.querySelectorAll('.contador').forEach(linha=>{
-  const nome  = linha.dataset.campo;
-  const alvo  = document.querySelector(`input[type=hidden][name="${nome}"]`);
-  const visor = linha.querySelector('b');
-  const menos = linha.querySelector('button[data-passo="-1"]');
-  function pinta(){
-    visor.textContent = alvo.value;
-    menos.disabled = Number(alvo.value) <= 0;
-  }
-  linha.querySelectorAll('button').forEach(b=>{
-    b.addEventListener('click', ()=>{
-      const novo = Math.min(20, Math.max(0, Number(alvo.value) + Number(b.dataset.passo)));
-      alvo.value = novo;
-      linha.dataset.tocado = '1';   // a partir daqui o valor é da pessoa, não o padrão
-      pinta();
-      guardarRascunho();
+/* ---------- Máscaras ---------- */
+function aplicarMascaras(){
+  document.querySelectorAll('input.tel-mask').forEach(el=>{
+    el.addEventListener('input', e=>{
+      let v = e.target.value.replace(/\D/g,'').slice(0,11);
+      if(v.length > 6)      v = `(${v.slice(0,2)}) ${v.slice(2,7)}-${v.slice(7)}`;
+      else if(v.length > 2) v = `(${v.slice(0,2)}) ${v.slice(2)}`;
+      else if(v.length > 0) v = `(${v}`;
+      e.target.value = v;
     });
   });
-  pinta();
-});
-
-/* ===== Máscaras de digitação (telefone, CPF, CNPJ) ===== */
-function maskTel(v){
-  v = v.replace(/\D/g,'').slice(0,11);
-  if(v.length > 6)      return `(${v.slice(0,2)}) ${v.slice(2,7)}-${v.slice(7)}`;
-  if(v.length > 2)      return `(${v.slice(0,2)}) ${v.slice(2)}`;
-  if(v.length > 0)      return `(${v}`;
-  return v;
-}
-function maskCpf(v){
-  v = v.replace(/\D/g,'').slice(0,11);
-  return v
-    .replace(/(\d{3})(\d)/,'$1.$2')
-    .replace(/(\d{3})(\d)/,'$1.$2')
-    .replace(/(\d{3})(\d{1,2})$/,'$1-$2');
-}
-function maskCnpj(v){
-  v = v.replace(/\D/g,'').slice(0,14);
-  return v
-    .replace(/^(\d{2})(\d)/,'$1.$2')
-    .replace(/^(\d{2})\.(\d{3})(\d)/,'$1.$2.$3')
-    .replace(/\.(\d{3})(\d)/,'.$1/$2')
-    .replace(/(\d{4})(\d)/,'$1-$2');
-}
-function maskCep(v){
-  v = v.replace(/\D/g,'').slice(0,8);
-  return v.length > 5 ? `${v.slice(0,5)}-${v.slice(5)}` : v;
-}
-function maskData(v){
-  v = v.replace(/\D/g,'').slice(0,8);
-  if(v.length > 4) return `${v.slice(0,2)}/${v.slice(2,4)}/${v.slice(4)}`;
-  if(v.length > 2) return `${v.slice(0,2)}/${v.slice(2)}`;
-  return v;
-}
-document.addEventListener('input', function(e){
-  const t = e.target;
-  if(!t.classList) return;
-  if(t.classList.contains('mask-tel'))      t.value = maskTel(t.value);
-  else if(t.classList.contains('mask-cpf')) t.value = maskCpf(t.value);
-  else if(t.classList.contains('mask-cnpj')) t.value = maskCnpj(t.value);
-  else if(t.classList.contains('mask-cep')) t.value = maskCep(t.value);
-  else if(t.classList.contains('mask-data')) t.value = maskData(t.value);
-});
-
-/* ===== Destaque da opção escolhida =====
-   O CSS faz isso com :has(input:checked), mas há aparelho que não repinta
-   quando a marcação muda — a pessoa clicava e nada acontecia na tela.
-   Aqui a classe é posta na mão, e vale para radio e checkbox. */
-function pintarEscolhas(){
-  document.querySelectorAll('.check').forEach(l=>{
-    const i = l.querySelector('input');
-    if(i) l.classList.toggle('marcado', i.checked);
+  document.querySelectorAll('input.cpf-mask').forEach(el=>{
+    el.addEventListener('input', e=>{
+      let v = e.target.value.replace(/\D/g,'').slice(0,11);
+      v = v.replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d{1,2})$/,'$1-$2');
+      e.target.value = v;
+    });
+  });
+  document.querySelectorAll('input.data-mask').forEach(el=>{
+    el.addEventListener('input', e=>{
+      let v = e.target.value.replace(/\D/g,'').slice(0,8);
+      if(v.length > 4)      v = `${v.slice(0,2)}/${v.slice(2,4)}/${v.slice(4)}`;
+      else if(v.length > 2) v = `${v.slice(0,2)}/${v.slice(2)}`;
+      e.target.value = v;
+    });
   });
 }
-document.addEventListener('change', e=>{
-  if(e.target.matches && e.target.matches('input[type=radio], input[type=checkbox]')) pintarEscolhas();
-});
-document.addEventListener('DOMContentLoaded', pintarEscolhas);
+aplicarMascaras();
 
-/* ===== CPF ou CNPJ (opcional) — segue a escolha feita nos botões =====
-   Sem isto o campo ficaria com máscara de CPF e cortaria um CNPJ em 11
-   dígitos, gravando um número quebrado. */
-document.addEventListener('DOMContentLoaded', () => {
-  const campo  = document.getElementById('campoDocNum');
-  const rotulo = document.getElementById('rotuloDocNum');
-  const caixa  = document.getElementById('campoDocWrap');
-  if(campo && rotulo && caixa){
-    document.querySelectorAll('input[name=proprietario_tipo]').forEach(r=>{
-      r.addEventListener('change', ()=>{
-        const ehPJ = r.value.indexOf('Jurídica') !== -1;
-        rotulo.textContent = ehPJ ? 'CNPJ' : 'CPF';
-        campo.name         = ehPJ ? 'pj_cnpj' : 'pf_cpf';
-        campo.placeholder  = ehPJ ? '00.000.000/0000-00' : '000.000.000-00';
-        campo.className    = ehPJ ? 'mask-cnpj' : 'mask-cpf';
-        campo.value        = '';
-        caixa.style.display = '';      // só aparece depois da escolha
-      });
-    });
-  }
+/* ---------- Upload de documentos (processa em memória; sobe no envio) ---------- */
+document.querySelectorAll('input[type=file][data-doc]').forEach(input=>{
+  input.addEventListener('change', async ()=>{
+    const dz = input.closest('.dropzone');
+    const chave = input.dataset.doc;
+    const file = input.files[0];
+    if(!file){ return; }
 
-  /* "Deseja impor alguma restrição?" — o texto longo só abre no "Sim" */
-  const cxRestricao = document.getElementById('campoRestricao');
-  if(cxRestricao){
-    document.querySelectorAll('input[name=tem_restricao]').forEach(r=>{
-      r.addEventListener('change', ()=>{
-        const sim = r.value === 'Sim';
-        cxRestricao.style.display = sim ? '' : 'none';
-        if(!sim) cxRestricao.querySelector('textarea').value = '';
-      });
-    });
-  }
-});
+    dz.querySelector('.conteudo-dz').innerHTML =
+      '<span class="nuvem">⏳</span><span class="acao">Processando...</span>';
 
-/* ===== Documento: exibir arquivo escolhido e permitir remover ===== */
-const inputDoc = document.getElementById('documento');
-const docSel   = document.getElementById('docSelecionado');
-const docNome  = document.getElementById('docNome');
-if(inputDoc){
-  inputDoc.addEventListener('change', ()=>{
-    if(inputDoc.files.length){
-      docNome.textContent = inputDoc.files[0].name;
-      docSel.classList.add('show');
-    } else {
-      docSel.classList.remove('show');
+    try{
+      const processado = await processarArquivo(file);
+      arquivos[chave] = processado;
+      dz.classList.add('tem-arquivo');
+      dz.querySelector('.conteudo-dz').innerHTML =
+        '<span class="nuvem">✅</span><span class="nome-arquivo">'+ file.name +'</span>'+
+        '<span class="sub">Toque para trocar</span>';
+    }catch(err){
+      dz.querySelector('.conteudo-dz').innerHTML =
+        '<span class="nuvem">⚠️</span><span class="acao">Não deu para anexar</span>'+
+        '<span class="sub">Tente outra foto</span>';
     }
   });
-  document.getElementById('docRemover').addEventListener('click', ()=>{
-    inputDoc.value = '';
-    docSel.classList.remove('show');
+});
+
+function lerBase64(file){
+  return new Promise((res,rej)=>{
+    const r = new FileReader();
+    r.onload  = ()=>res(r.result);
+    r.onerror = rej;
+    r.readAsDataURL(file);
   });
 }
 
-/* Envia o documento direto para o Supabase (bucket privado) e
-   devolve o nome do arquivo guardado. Não joga a imagem na planilha. */
-async function enviarDocumento(file, token){
-  // O arquivo cai em {token}/nome. É o token que autoriza a gravação —
-  // sem ele o balde recusa, e é isso que impede alguém de usar o
-  // Storage da Moralí como hospedagem.
-  const ext = (file.name.split('.').pop() || 'dat').toLowerCase();
-  const limpo = file.name.replace(/[^a-zA-Z0-9._-]/g, '_').slice(-60);
-  const caminho = `${token}/${Date.now()}_${limpo || 'documento.' + ext}`;
+// Reduz a foto para no máx. 1400px e qualidade 0,7 (deixa o envio leve)
+function comprimirImagem(file){
+  return new Promise(async (res,rej)=>{
+    try{
+      const dataUrl = await lerBase64(file);
+      const img = new Image();
+      img.onload = ()=>{
+        const max = 1400;
+        let {width:w, height:h} = img;
+        if(w > max || h > max){
+          if(w >= h){ h = Math.round(h*max/w); w = max; }
+          else      { w = Math.round(w*max/h); h = max; }
+        }
+        const cv = document.createElement('canvas');
+        cv.width = w; cv.height = h;
+        cv.getContext('2d').drawImage(img,0,0,w,h);
+        res({ name:file.name, type:'image/jpeg', data: cv.toDataURL('image/jpeg',0.7) });
+      };
+      img.onerror = rej;
+      img.src = dataUrl;
+    }catch(e){ rej(e); }
+  });
+}
+
+async function processarArquivo(file){
+  if(file.type.startsWith('image/')) return await comprimirImagem(file);
+  // PDF ou outros: envia como está
+  const data = await lerBase64(file);
+  return { name:file.name, type:file.type, data:data };
+}
+
+/* ---------- Converte o arquivo (dataURL) para Blob, p/ subir ao Supabase ---------- */
+function dataURLparaBlob(dataURL){
+  const partes = dataURL.split(',');
+  const mime = (partes[0].match(/:(.*?);/) || [,'application/octet-stream'])[1];
+  const bin = atob(partes[1]);
+  const arr = new Uint8Array(bin.length);
+  for(let i=0;i<bin.length;i++) arr[i] = bin.charCodeAt(i);
+  return new Blob([arr], {type: mime});
+}
+
+/* ---------- Sobe UM arquivo direto pro Supabase (bucket privado) ----------
+   Retorna o NOME do arquivo salvo (caminho dentro do bucket).
+   É esse nome que vai pro Make/planilha — a imagem em si nunca passa por lá. */
+async function enviarParaSupabase(processado, chave, token){
+  // Cai em {token}/nome — é o token que autoriza a gravação. Sem ele o
+  // balde recusa, e é isso que impede usarem o Storage como hospedagem.
+  const blob = dataURLparaBlob(processado.data);
+  const ext  = (processado.name.split('.').pop() || 'jpg').toLowerCase().replace(/[^a-z0-9]/g,'');
+  const caminho = `${token}/${Date.now()}_${chave}.${ext}`;
+
   const resp = await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/${caminho}`, {
-    method: 'POST',
-    headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY,
-               'Content-Type': file.type || 'application/octet-stream' },
-    body: file
+    method:'POST',
+    headers:{
+      'Authorization': 'Bearer ' + SUPABASE_KEY,
+      'apikey': SUPABASE_KEY,
+      'Content-Type': processado.type || 'application/octet-stream',
+      'x-upsert': 'false'
+    },
+    body: blob
   });
   if(!resp.ok){
     const t = await resp.text();
@@ -1112,52 +985,54 @@ async function enviarDocumento(file, token){
                   : (resp.status === 415 ? 'esse tipo de arquivo não é aceito'
                   : ('erro ' + resp.status + ' ' + t.slice(0,80))));
   }
-  return { bucket: BUCKET, caminho, nome: file.name,
-           tamanho: file.size, tipo: file.type || '' };
+  return { bucket: BUCKET, caminho, nome: processado.name,
+           tamanho: blob.size, tipo: processado.type || '', campo: chave };
 }
 
-// Envio final
+/* ---------- Envio final ---------- */
 async function enviar(){
   const seq = sequencia();
   const etapaEl = document.getElementById(seq[indice]);
   if(!validar(etapaEl)) return;
 
+  // Aceite LGPD obrigatório
+  const aceite  = document.getElementById('aceiteLgpd');
+  const erroObs = etapaEl.querySelector('[data-erro]');
+  if(!aceite.checked){
+    erroObs.textContent = 'É necessário aceitar o Termo de Uso e Privacidade para enviar.';
+    erroObs.classList.add('show');
+    return;
+  }
+
   const btn = document.getElementById('btnEnviar');
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span>Enviando...';
 
-  // Junta todas as respostas num objeto
   const form = document.getElementById('form');
   const fd = new FormData(form);
   const dados = {};
-  fd.forEach((valor, chave)=>{
-    if(chave === 'incluso'){
-      dados.incluso = dados.incluso ? dados.incluso + ', ' + valor : valor;
-    } else {
-      dados[chave] = valor;
-    }
-  });
+  fd.forEach((valor, chave)=>{ dados[chave] = valor; });
 
-  /* ---- Compatibilidade com o Make atual ----
-     Copiamos o contato escolhido (PF ou PJ) de volta para os nomes
-     antigos, para que o cenário existente continue capturando o
-     essencial enquanto os campos novos não são mapeados. */
-  // O contato agora é um só, na etapa final, valha PF ou PJ.
-  dados.nome_proprietario = dados.pf_nome      || '';
-  dados.whatsapp          = dados.pf_whatsapp  || '';
-  dados.email             = dados.pf_email     || '';
+  // O responsável (loc_) é a mesma pessoa que o morador (mor_) quando o
+  // aluguel fica no nome de quem preenche ("Sim"). Nesse caso, copiamos a
+  // identidade do morador para o responsável, para o Make sempre ler loc_*
+  // como a pessoa analisada pelo seguro.
+  const respEhMorador = (dados.quem_assina || '').indexOf('Sim') === 0;
+  dados.responsavel_eh_morador = respEhMorador ? 'Sim' : 'Não';
+  if(respEhMorador){
+    ['nome','cpf','rg','nascimento','estado_civil','endereco','whatsapp','email'].forEach(c=>{
+      dados['loc_'+c] = dados['mor_'+c] || '';
+    });
+  }
 
-  // Remonta o endereço do imóvel num só texto, mantendo o campo "endereco" que o Make já usa
-  // Não pedimos mais estado nem CEP: o estado é sempre SP e o CEP a Moralí
-  // descobre pelo endereço. Os campos seguem no envio para o Make não quebrar.
-  dados.endereco_estado = dados.endereco_estado || 'SP';
-  dados.endereco_cep    = dados.endereco_cep    || '';
-  const _comp = dados.endereco_complemento ? ' - ' + dados.endereco_complemento : '';
-  dados.endereco = `${dados.endereco_logradouro || ''}, ${dados.endereco_numero || ''}${_comp}, `
-                 + `${dados.endereco_bairro || ''}, ${dados.endereco_cidade || ''}/${dados.endereco_estado}`;
+  // Se a tela do cônjuge não se aplica (solteiro, viúvo, etc.), não envia dados de
+  // cônjuge — mesmo que tenham ficado preenchidos antes de a pessoa trocar o estado civil.
+  if(!precisaConjuge(!respEhMorador)){
+    ['nome','cpf','rg','nascimento','whatsapp'].forEach(c=>{ dados['conj_loc_'+c] = ''; });
+  }
 
   const params = new URLSearchParams(window.location.search);
-  dados.parceiro = params.get('parceiro') || '';
+  dados.parceiro   = params.get('parceiro') || '';
   dados.data_envio = new Date().toLocaleString('pt-BR');
 
   try{
@@ -1179,31 +1054,30 @@ async function enviar(){
       p_apelido: params.get('i') || null
     });
 
-    // 2) sobe o documento, se houver. FALHA AQUI NÃO É MAIS SILENCIOSA:
-    //    antes gravava "falha no envio" e mostrava "Cadastro enviado!"
-    //    do mesmo jeito — a pessoa ia embora achando que mandou.
+    // 2) sobe os três documentos. FALHA AQUI NÃO É MAIS SILENCIOSA:
+    //    antes gravava "ERRO_UPLOAD" no campo e mostrava "Obrigado!" do
+    //    mesmo jeito — a pessoa ia embora achando que tinha mandado.
     const anexos = [];
-    if(inputDoc && inputDoc.files.length){
+    const falhas = [];
+    for(const k of Object.keys(arquivos)){
       try{
-        anexos.push(await enviarDocumento(inputDoc.files[0], inicio.token));
+        anexos.push(await enviarParaSupabase(arquivos[k], k, inicio.token));
+        dados[k + '_nome'] = arquivos[k].name;
       }catch(e){
-        const seguir = confirm(
-          'Não consegui enviar o documento (' + e.message + ').\n\n' +
-          'Quer enviar o cadastro mesmo assim? Você poderá mandar o ' +
-          'documento depois pelo WhatsApp.');
-        if(!seguir){
-          btn.disabled = false;
-          btn.innerHTML = 'Enviar cadastro';
-          return;
-        }
+        falhas.push(rotuloDoc(k) + ' (' + e.message + ')');
       }
     }
-
-    // O status do documento sai do envio que vale — o de cima, com o
-    // token. Antes era escrito antes de qualquer upload acontecer.
-    dados.documento_status  = (!inputDoc || !inputDoc.files.length) ? 'sem documento'
-                            : (anexos.length ? 'enviado' : 'falha no envio');
-    dados.documento_arquivo = anexos.length ? anexos[0].caminho : '';
+    if(falhas.length){
+      const seguir = confirm(
+        'Não consegui enviar:\n\n· ' + falhas.join('\n· ') +
+        '\n\nQuer enviar a proposta mesmo assim? Você poderá mandar ' +
+        'esses documentos depois pelo WhatsApp.');
+      if(!seguir){
+        btn.disabled = false;
+        btn.innerHTML = 'Enviar proposta';
+        return;
+      }
+    }
 
     // 3) fecha a ficha
     await rpc('ficha_enviar', {
@@ -1214,32 +1088,38 @@ async function enviar(){
       p_segundos: Math.round((Date.now() - ABERTO_EM) / 1000)
     });
 
-    localStorage.removeItem(RASCUNHO);   // deu certo: o rascunho não serve mais
+    localStorage.removeItem(RASCUNHO);
 
     const alvo = document.getElementById('protocolo');
     if(alvo) alvo.textContent = inicio.protocolo || '';
     document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
     progressFill.style.width = '100%';
-    stepper.style.display = 'none';
     thanks.classList.add('active');
     window.scrollTo({top:0,behavior:'smooth'});
   }catch(err){
     btn.disabled = false;
-    btn.innerHTML = 'Enviar cadastro';
+    btn.innerHTML = 'Enviar proposta';
     alert('Não conseguimos enviar agora: ' + (err.message || '') +
           '\n\nSuas respostas ficaram guardadas neste aparelho — ' +
           'é só tentar de novo.');
   }
 }
 
+/** O nome que a pessoa reconhece, para a mensagem de falha dizer qual
+ *  documento não subiu. "doc_rg_cnh (erro 415)" não ajuda ninguém. */
+function rotuloDoc(chave){
+  return ({ doc_rg_cnh:  'o RG ou CNH',
+            doc_renda:   'o comprovante de renda',
+            doc_endereco:'o comprovante de endereço' })[chave] || chave;
+}
+
 /* =====================================================================
    RASCUNHO NO APARELHO
-   Formulário de 7 etapas em celular: basta uma ligação entrar para a
-   pessoa perder tudo e não voltar. Guardar o que ela digitou custa
-   quatro linhas e é a diferença entre recomeçar e continuar.
-   Nada sai do aparelho — é o localStorage do próprio navegador dela.
+   Esta proposta é longa: locatário, cônjuge, morador, renda, perfil e
+   duas referências. Perder tudo por uma ligação que entrou é o jeito
+   mais fácil de a pessoa não voltar. Nada sai do aparelho dela.
    ===================================================================== */
-const RASCUNHO = 'morali-ficha-proprietario';
+const RASCUNHO = 'morali-ficha-locatario';
 
 function guardarRascunho(){
   try{
@@ -1253,7 +1133,6 @@ function lerRascunho(){
   try{
     const g = JSON.parse(localStorage.getItem(RASCUNHO) || 'null');
     if(!g || !g.d) return;
-    // rascunho de mais de 7 dias é lixo, não ajuda ninguém
     if(Date.now() - g.em > 7*24*3600*1000){ localStorage.removeItem(RASCUNHO); return; }
     let achou = 0;
     for(const [k,v] of Object.entries(g.d)){
@@ -1277,34 +1156,6 @@ function lerRascunho(){
 
 document.addEventListener('input', guardarRascunho);
 document.addEventListener('DOMContentLoaded', lerRascunho);
-
-/* =====================================================================
-   O CEP PREENCHE O ENDEREÇO
-   Sete campos digitados à mão viram um. Se o serviço não responder, a
-   pessoa digita como antes — nada trava por causa disso.
-   ===================================================================== */
-document.addEventListener('DOMContentLoaded', () => {
-  const cep = document.querySelector('[name="endereco_cep"]');
-  if(!cep) return;
-  cep.addEventListener('blur', async () => {
-    const so = (cep.value || '').replace(/\D/g, '');
-    if(so.length !== 8) return;
-    try{
-      const r = await fetch(`https://viacep.com.br/ws/${so}/json/`);
-      const d = await r.json();
-      if(d.erro) return;
-      const por = { endereco_logradouro: d.logradouro, endereco_bairro: d.bairro,
-                    endereco_cidade: d.localidade, endereco_estado: d.uf };
-      for(const [nome, valor] of Object.entries(por)){
-        const el = document.querySelector(`[name="${nome}"]`);
-        if(el && valor && !el.value) el.value = valor;
-      }
-      const num = document.querySelector('[name="endereco_numero"]');
-      if(num && !num.value) num.focus();
-      guardarRascunho();
-    }catch(e){ /* sem internet no serviço de CEP: segue digitando */ }
-  });
-});
 </script>
 </body>
 </html>
