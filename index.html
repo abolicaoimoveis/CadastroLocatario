@@ -352,7 +352,7 @@ select{
 
         <div class="campo">
           <label>Quanto recebe por mês <span class="req">*</span></label>
-          <input type="text" name="loc_renda" placeholder="R$ 0,00" required>
+          <input type="text" name="loc_renda" class="moeda-mask" inputmode="numeric" placeholder="R$ 0,00" required>
           <span class="dica">O valor que entra todo mês. Pode ser trabalho com carteira ou por conta própria.</span>
         </div>
 
@@ -878,6 +878,20 @@ function aplicarMascaras(){
       if(v.length > 4)      v = `${v.slice(0,2)}/${v.slice(2,4)}/${v.slice(4)}`;
       else if(v.length > 2) v = `${v.slice(0,2)}/${v.slice(2)}`;
       e.target.value = v;
+    });
+  });
+  /* 22/09/2026 — DINHEIRO. Enche da direita para a esquerda, pelos
+     centavos: 9 → R$ 0,09 · 900 → R$ 9,00 · 90000 → R$ 900,00. Sem isto
+     o campo era texto solto e quem digitava "90000" querendo R$ 900,00
+     mandava noventa mil. */
+  document.querySelectorAll('input.moeda-mask').forEach(el=>{
+    el.addEventListener('input', e=>{
+      const d = String(e.target.value || '').replace(/\D/g,'').slice(0,11);
+      // só zeros = vazio: apagar tecla a tecla chega ao campo limpo
+      if(!d || /^0+$/.test(d)){ e.target.value = ''; return; }
+      const n   = d.replace(/^0+(?=\d{3})/,'').padStart(3,'0');
+      const int = n.slice(0,-2).replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+      e.target.value = `R$ ${int},${n.slice(-2)}`;
     });
   });
 }
